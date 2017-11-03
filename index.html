@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Game</title>
+	<style type="text/css">
+		body {
+			text-align: center;
+		}
+		#matriz {
+			width: auto;
+			height: auto;
+			display: inline-block;
+			border: solid 1px black;
+			margin: 0 auto;
+			padding-top: 4px;
+		}
+
+		.bloco {
+			background-color: #ccc;
+			width: 15px;
+			height: 15px;
+			display: inline-block;
+			margin-left: 1px;
+			margin-right: 1px;
+			margin-top: -2px;
+		}
+	</style>
+</head>
+<body>
+	<div id="matriz">
+		
+	</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		gerarBlocos(20, 30);
+	});
+
+	function gerarBlocos(x, y) {
+		for (var j = 0; j < y; j++) {
+			for (var i = 0; i < x; i++) {
+				$('#matriz').append('<div class="bloco"></div>');
+			}
+			$('#matriz').append('<br>');
+		}
+	}
+
+	function print(x, y) {
+		
+	}
+</script>
+</html>
