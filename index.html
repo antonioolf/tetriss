@@ -41,8 +41,7 @@
 	var pecaAtual = { x: 0, y: 0 };
 
 	$(document).ready(function() {
-		gerarBlocos(matriz.x, matriz.y);
-
+		gerarMatriz(matriz.x, matriz.y);
 
 		// print(2, 3, 1);
 		
@@ -57,7 +56,7 @@
 		// }, 800);
 	});
 
-	function gerarBlocos(x, y) {
+	function gerarMatriz(x, y) {
 		for (var i = 0; i < y; i++) {
 			for (var j = 0; j < x; j++) {
 				$('#matriz').append('<div class="bloco" id="'+ i +'-'+ j +'"></div>');
