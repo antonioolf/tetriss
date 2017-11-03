@@ -24,6 +24,10 @@
 			margin-right: 1px;
 			margin-top: -2px;
 		}
+
+		.bloco.ativo {
+			background-color: black;
+		}
 	</style>
 </head>
 <body>
@@ -34,21 +38,44 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
+
+	var matriz = {x: 20, y: 30};
+
 	$(document).ready(function() {
-		gerarBlocos(20, 30);
+		gerarBlocos(matriz.x, matriz.y);
+		print(0, 0);
+		// setPixel(4, 5, false);
 	});
 
 	function gerarBlocos(x, y) {
-		for (var j = 0; j < y; j++) {
-			for (var i = 0; i < x; i++) {
-				$('#matriz').append('<div class="bloco"></div>');
+		for (var i = 0; i < y; i++) {
+			for (var j = 0; j < x; j++) {
+				$('#matriz').append('<div class="bloco" id="'+ i +'-'+ j +'"></div>');
 			}
 			$('#matriz').append('<br>');
 		}
 	}
 
 	function print(x, y) {
-		
+
+		var array = [
+			[0, 0, 1],
+			[1, 1, 1],
+		];
+
+		for (var i = 0; i < array.length; i++) {
+			for (var j = 0; j < array[i].length; j++) {
+				setPixel(x + i, y + j, array[i][j]);
+			}
+		}
+	}
+
+	function setPixel(x, y, flag) {
+		if(flag == 1) {
+			$('#' + x + '-' + y).addClass('ativo');
+		} else {
+			$('#' + x + '-' + y).removeClass('ativo');
+		}
 	}
 </script>
 </html>
