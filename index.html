@@ -31,20 +31,22 @@
 	</style>
 </head>
 <body>
-	<div id="matriz">
-		
-	</div>
+	<div id="matriz"></div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
-	var matriz = {x: 20, y: 30};
+	var matriz = { x: 20, y: 30 };
+	var pecaAtual = { x: 0, y: 0 };
 
 	$(document).ready(function() {
 		gerarBlocos(matriz.x, matriz.y);
-		print(0, 0);
-		// setPixel(4, 5, false);
+		
+		setInterval(function(){
+			print(3, 5);
+			console.log('loop');
+		}, 900);
 	});
 
 	function gerarBlocos(x, y) {
