@@ -42,11 +42,19 @@
 
 	$(document).ready(function() {
 		gerarBlocos(matriz.x, matriz.y);
+
+
+		// print(2, 3, 1);
 		
-		setInterval(function(){
-			print(3, 5);
-			console.log('loop');
-		}, 900);
+		// setInterval(function(){
+			
+		// 	print(pecaAtual.y, pecaAtual.x, 0);
+		// 	pecaAtual.y++;
+		// 	print(pecaAtual.y, pecaAtual.x, 1);
+			
+
+		// 	console.log('loop');
+		// }, 800);
 	});
 
 	function gerarBlocos(x, y) {
@@ -58,7 +66,7 @@
 		}
 	}
 
-	function print(x, y) {
+	function print(x, y, flag) {
 
 		var array = [
 			[0, 0, 1],
@@ -67,7 +75,7 @@
 
 		for (var i = 0; i < array.length; i++) {
 			for (var j = 0; j < array[i].length; j++) {
-				setPixel(x + i, y + j, array[i][j]);
+				setPixel(x + i, y + j, array[i][j], flag);
 			}
 		}
 	}
