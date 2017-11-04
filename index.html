@@ -35,25 +35,38 @@
 </body>
 
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="pecas.js"></script>
 <script type="text/javascript">
 
 	var matriz = { x: 20, y: 30 };
-	var pecaAtual = { x: 8, y: 0 };
+	var config = {
+		valocidade: 800
+	}
+	
+	// A primeira peça começa no centro e no topo
+	var pecaAtual = { 
+		x: 8, 
+		y: -1,
+		matriz: pecas[0][1]
+	};
 
 	$(document).ready(function() {
 		gerarMatriz(matriz.x, matriz.y);
-
-		// print(2, 3, 1);
 		
 		setInterval(function() {
 			
+			// Apaga pecaAtual e desenha 1 pixel abaixo
 			print(pecaAtual.y, pecaAtual.x, false);
 			pecaAtual.y++;
 			print(pecaAtual.y, pecaAtual.x, true);
 			
+			if(pecaAtual.y == matriz.y) {
+				pecaAtual.y = -1;
+				pecaAtual.matriz = pecas[0][0]
+			}
 
 			console.log('loop');
-		}, 800);
+		}, config.valocidade);
 	});
 
 	/*
@@ -68,9 +81,9 @@
 			[1, 1, 1],
 		];
 
-		for (var i = 0; i < array.length; i++) {
-			for (var j = 0; j < array[i].length; j++) {
-				var valor = flag ? array[i][j] : 0;
+		for (var i = 0; i < pecaAtual.matriz.length; i++) {
+			for (var j = 0; j < pecaAtual.matriz[i].length; j++) {
+				var valor = flag ? pecaAtual.matriz[i][j] : 0;
 				setPixel(x + i, y + j, valor);
 			}
 		}
