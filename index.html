@@ -40,16 +40,17 @@
 
 	var matriz = { x: 20, y: 30 };
 	var config = {
-		valocidade: 500
+		valocidade: 100
 	}
 	
 	// A primeira peça começa no centro e no topo
-
 	var pecaAtual = { 
 		x: 8, 
 		y: -1,
 		matriz: pecas[0][0]
 	};
+
+	var pecasMortas = [];
 
 	$(document).ready(function() {
 		gerarMatriz(matriz.x, matriz.y);
@@ -61,24 +62,40 @@
 			pecaAtual.y++;
 			print(pecaAtual.y, pecaAtual.x, true);
 			
-			if(pecaAtual.y == matriz.y) {
+			if(
+				colidiuYComPecaMorta(pecaAtual) ||
+				
+				// Se a peça atual chegar no chão...
+				pecaAtual.y == (matriz.y - pecaAtual.matriz.length)
+			) {
+				pecasMortas.push(pecaAtual);
+				
+				// Volta peça atual para o topo
 				pecaAtual.y = -1;
-
+				
+				// Pega uma peça aleatória do repositório e define como a matriz
 				var randPeca = rand(0, pecas.length-1);
 				var randRotacao = rand(0, pecas[randPeca].length-1);
-
 				pecaAtual.matriz = pecas[randPeca][randRotacao]
 			}
 
-			console.log('loop');
+			// console.log('loop');
 		}, config.valocidade);
 	});
 
+	function colidiuYComPecaMorta(peca) {
+		// for (var i = 0; i < pecasMortas.length; i++) {
+		// 	if(peca.y == pecasMortas[i].y) {
+		// 		return true;
+		// 	}
+		// }
+		return false;
+	}
+
 	/*
-		Printa uma peça na posição X,Y
-		* Se a flag for false apaga todos os pixels da peça, sejam eles 0 ou 1
-		* Se a flag for true seta pixels de acordo com o array da peça
-	*/
+	* Printa uma peça na posição X,Y
+	* Se a flag for false apaga todos os pixels da peça, sejam eles 0 ou 1
+	* Se a flag for true seta pixels de acordo com o array da peça */
 	function print(x, y, flag) {
 
 		var array = [
@@ -94,6 +111,7 @@
 		}
 	}
 
+	// Ativa/Inativa pixel baseado no Id que é uma string com as coordenadas
 	function setPixel(x, y, flag) {
 		if(flag == 1) {
 			$('#' + x + '-' + y).addClass('ativo');
