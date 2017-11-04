@@ -34,7 +34,7 @@
 	<div id="matriz"></div>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="jquery.js"></script>
 <script type="text/javascript">
 
 	var matriz = { x: 20, y: 30 };
@@ -45,26 +45,22 @@
 
 		// print(2, 3, 1);
 		
-		setInterval(function(){
+		setInterval(function() {
 			
-			print(pecaAtual.y, pecaAtual.x, 0);
+			print(pecaAtual.y, pecaAtual.x, false);
 			pecaAtual.y++;
-			print(pecaAtual.y, pecaAtual.x, 1);
+			print(pecaAtual.y, pecaAtual.x, true);
 			
 
 			console.log('loop');
 		}, 800);
 	});
 
-	function gerarMatriz(x, y) {
-		for (var i = 0; i < y; i++) {
-			for (var j = 0; j < x; j++) {
-				$('#matriz').append('<div class="bloco" id="'+ i +'-'+ j +'"></div>');
-			}
-			$('#matriz').append('<br>');
-		}
-	}
-
+	/*
+		Printa uma peça na posição X,Y
+		* Se a flag for false apaga todos os pixels da peça, sejam eles 0 ou 1
+		* Se a flag for true seta pixels de acordo com o array da peça
+	*/
 	function print(x, y, flag) {
 
 		var array = [
@@ -74,7 +70,8 @@
 
 		for (var i = 0; i < array.length; i++) {
 			for (var j = 0; j < array[i].length; j++) {
-				setPixel(x + i, y + j, array[i][j], flag);
+				var valor = flag ? array[i][j] : 0;
+				setPixel(x + i, y + j, valor);
 			}
 		}
 	}
@@ -86,5 +83,14 @@
 			$('#' + x + '-' + y).removeClass('ativo');
 		}
 	}
+
+	function gerarMatriz(x, y) {
+		for (var i = 0; i < y; i++) {
+			for (var j = 0; j < x; j++) {
+				$('#matriz').append('<div class="bloco" id="'+ i +'-'+ j +'"></div>');
+			}
+			$('#matriz').append('<br>');
+		}
+	}	
 </script>
 </html>
