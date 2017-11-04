@@ -35,24 +35,25 @@
 </body>
 
 <script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="pecas.js"></script>
+<script type="text/javascript" src="pecas.js?v=1"></script>
 <script type="text/javascript">
 
 	var matriz = { x: 20, y: 30 };
 	var config = {
-		valocidade: 800
+		valocidade: 500
 	}
 	
 	// A primeira peça começa no centro e no topo
+
 	var pecaAtual = { 
 		x: 8, 
 		y: -1,
-		matriz: pecas[0][1]
+		matriz: pecas[0][0]
 	};
 
 	$(document).ready(function() {
 		gerarMatriz(matriz.x, matriz.y);
-		
+
 		setInterval(function() {
 			
 			// Apaga pecaAtual e desenha 1 pixel abaixo
@@ -62,7 +63,11 @@
 			
 			if(pecaAtual.y == matriz.y) {
 				pecaAtual.y = -1;
-				pecaAtual.matriz = pecas[0][0]
+
+				var randPeca = rand(0, pecas.length-1);
+				var randRotacao = rand(0, pecas[randPeca].length-1);
+
+				pecaAtual.matriz = pecas[randPeca][randRotacao]
 			}
 
 			console.log('loop');
@@ -104,6 +109,10 @@
 			}
 			$('#matriz').append('<br>');
 		}
+	}
+
+	function rand(min, max) {
+	  	return Math.floor(Math.random() * (max - min + 1)) + min;
 	}	
 </script>
 </html>
