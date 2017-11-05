@@ -40,7 +40,7 @@
 
 	var matriz = { x: 20, y: 30 };
 	var config = {
-		valocidade: 100
+		valocidade: 300
 	}
 	
 	// A primeira peça começa no centro e no topo
@@ -68,7 +68,13 @@
 				// Se a peça atual chegar no chão...
 				pecaAtual.y == (matriz.y - pecaAtual.matriz.length)
 			) {
-				pecasMortas.push(pecaAtual);
+				var pecaMorta = {
+					x: pecaAtual.x,
+					y: pecaAtual.y,
+					matriz: pecaAtual.matriz
+				};
+
+				pecasMortas.push(pecaMorta);
 				
 				// Volta peça atual para o topo
 				pecaAtual.y = -1;
@@ -84,11 +90,11 @@
 	});
 
 	function colidiuYComPecaMorta(peca) {
-		// for (var i = 0; i < pecasMortas.length; i++) {
-		// 	if(peca.y == pecasMortas[i].y) {
-		// 		return true;
-		// 	}
-		// }
+		for (var i = 0; i < pecasMortas.length; i++) {
+			if(peca.y == pecasMortas[i].y) {
+				return true;
+			}
+		}
 		return false;
 	}
 
