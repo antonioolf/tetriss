@@ -38,9 +38,15 @@
 <script type="text/javascript" src="pecas.js?v=1"></script>
 <script type="text/javascript">
 
+	/* TODO List: 
+	//	- Quando apertar pra baixo aumentar a velocidade
+	//	- Remover jQuery
+	*/
+
 	var matriz = { x: 20, y: 30 };
 	var config = {
-		valocidade: 300
+		// velocidade: 300
+		velocidade: 100
 	}
 	
 	// A primeira peça começa no centro e no topo
@@ -55,6 +61,7 @@
 	$(document).ready(function() {
 		gerarMatriz(matriz.x, matriz.y);
 
+		// Loop principal
 		setInterval(function() {
 			
 			// Apaga pecaAtual e desenha 1 pixel abaixo
@@ -63,7 +70,7 @@
 			print(pecaAtual.y, pecaAtual.x, true);
 			
 			if(
-				colidiuYComPecaMorta(pecaAtual) ||
+				colidiuY(pecaAtual) ||
 				
 				// Se a peça atual chegar no chão...
 				pecaAtual.y == (matriz.y - pecaAtual.matriz.length)
@@ -86,16 +93,52 @@
 			}
 
 			// console.log('loop');
-		}, config.valocidade);
+		}, config.velocidade);
 	});
 
-	function colidiuYComPecaMorta(peca) {
-		for (var i = 0; i < pecasMortas.length; i++) {
-			if(peca.y == pecasMortas[i].y) {
-				return true;
-			}
+	function colidiuY(peca) {
+		
+		// Verifica se tem alguma peça morta no lugar que a peça atual está
+		var colididas = pecasMortas.filter(function(pecaMorta) {
+			return peca.y == (pecaMorta.y - pecaMorta.matriz.length);
+		});
+
+		if(colididas.length == 0) {	
+		
+			return false;
+		
+		} else {
+
+			// Verifica se também colidiram os pixels de dentro da matriz
+			var colididasPX = colididas.filter(function(item) {
+
+				for (var item_i=0; item_i < item.matriz.length; item_i++) {
+					for (var item_j=0; item_j < item.matriz[item_i].length; item_j++) {
+
+
+						for (var atual_i=0; atual_i < pecaAtual.matriz.length; atual_i++) {
+							for (var atual_j=0; atual_j < pecaAtual.matriz[atual_i].length; atual_j++) {
+						
+								if((
+									item.matriz[item_i][item_j] == 1) && (pecaAtual.matriz[atual_i][atual_j] == 1)
+									&& 
+
+									// Verifica se a posição x dos dois são iguais
+									// (IMPLEMENTAR VERIFICAÇÃO TANTO NO X QUANTO NO Y)
+									item.x + item_j == pecaAtual.x + atual_j
+								) {
+									return true;
+								}
+							}
+						}
+				    }
+				}
+
+				return false;
+			});
+
+			return colididasPX.length > 0;
 		}
-		return false;
 	}
 
 	/*
