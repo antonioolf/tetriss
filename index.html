@@ -45,8 +45,7 @@
 
 	var matriz = { x: 20, y: 30 };
 	var config = {
-		// velocidade: 300
-		velocidade: 100
+		velocidade: 300
 	}
 	
 	// A primeira peça começa no centro e no topo
@@ -60,7 +59,7 @@
 
 	$(document).ready(function() {
 		gerarMatriz(matriz.x, matriz.y);
-
+		
 		// Loop principal
 		setInterval(function() {
 			
@@ -92,11 +91,44 @@
 
 			// console.log('loop');
 		}, config.velocidade);
+
+
+		// Verifica se alguma tecla foi pressionada
+		$("body").keydown(function(e) {
+		  	// left
+		  	if(e.keyCode == 37) {
+				print(pecaAtual.y, pecaAtual.x, false);
+				pecaAtual.x--;
+				print(pecaAtual.y, pecaAtual.x, true);
+
+		  	}
+		  	// right
+		  	else if(e.keyCode == 39) {
+				print(pecaAtual.y, pecaAtual.x, false);
+				pecaAtual.x++;
+				print(pecaAtual.y, pecaAtual.x, true);
+		  	}
+
+		  	// baixo
+		  	else if(e.keyCode == 40) {		  		
+		  		config.velocidade = 100;
+	  		}
+		});
+
+		$("body").keyup(function(e) {
+		  	// baixo
+		  	if(e.keyCode == 40) {
+		  		config.velocidade = 300;
+	  		}
+		});
 	});
 
 	function colidiuY(peca) {
 		// Verifica se tem alguma peça morta no lugar que a peça atual está
 		var colididas = pecasMortas.filter(function(pecaMorta) {
+			
+											// Compensa o tamanho 
+											// da peça morta com o da atual
 			return peca.y >= (pecaMorta.y - peca.matriz.length);
 		});
 
@@ -135,7 +167,6 @@
 		}
 	}
 
-
 	function getPxColisores(peca) {
 
 		var matriz = peca.matriz;
@@ -160,16 +191,15 @@
 	* Se a flag for false apaga todos os pixels da peça, sejam eles 0 ou 1
 	* Se a flag for true seta pixels de acordo com o array da peça */
 	function print(x, y, flag) {
-
-		var array = [
-			[0, 0, 1],
-			[1, 1, 1],
-		];
-
+		
 		for (var i = 0; i < pecaAtual.matriz.length; i++) {
 			for (var j = 0; j < pecaAtual.matriz[i].length; j++) {
-				var valor = flag ? pecaAtual.matriz[i][j] : 0;
-				setPixel(x + i, y + j, valor);
+				
+				// Evita que a peça atual apague os rastros das outras
+				if(pecaAtual.matriz[i][j] != 0) {
+					var valor = flag ? pecaAtual.matriz[i][j] : 0;
+					setPixel(x + i, y + j, valor);
+				}
 			}
 		}
 	}
