@@ -53,4 +53,30 @@ var pecas = [
 		],
 	],
 
+	[
+		[
+			[1, 1],
+			[1, 1],
+		],
+	],
+
+	[
+		[
+			[1],
+			[1],
+			[1],
+			[1],
+		],
+		[
+			[1, 1, 1, 1],
+		],		
+	],
+
 ];
+
+
+function getRandMatriz() {
+	var randPeca = rand(0, pecas.length-1);
+	var randRotacao = rand(0, pecas[randPeca].length-1);
+	return pecas[randPeca][randRotacao];s
+}

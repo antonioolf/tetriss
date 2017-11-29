@@ -38,11 +38,9 @@
 <script type="text/javascript" src="pecas.js?v=1"></script>
 <script type="text/javascript">
 
-	/* TODO List: 
-	//	- Quando apertar pra baixo aumentar a velocidade
-	//	- Remover jQuery
+	/* TODO
+	//	- Não usar jquery
 	*/
-
 	var matriz = { x: 20, y: 30 };
 	var config = {
 		velocidade: 300
@@ -52,7 +50,7 @@
 	var pecaAtual = { 
 		x: 8, 
 		y: -1,
-		matriz: pecas[0][0]
+		matriz: getRandMatriz()
 	};
 
 	var pecasMortas = [];
@@ -63,15 +61,7 @@
 		// Loop principal
 		setInterval(function() {
 			
-			// Apaga pecaAtual e desenha 1 pixel abaixo
-			print(pecaAtual.y, pecaAtual.x, false);
-			pecaAtual.y++;
-			print(pecaAtual.y, pecaAtual.x, true);
-			
-			if(colidiuY(pecaAtual) ||
-				// Se a peça atual chegar no chão...
-				(pecaAtual.y == (matriz.y - pecaAtual.matriz.length))
-			) {
+			if(colidiuY(pecaAtual) || fimDoCampo(pecaAtual)) {
 				var pecaMorta = {
 					x: pecaAtual.x,
 					y: pecaAtual.y,
@@ -82,46 +72,54 @@
 				
 				// Volta peça atual para o topo
 				pecaAtual.y = -1;
+				pecaAtual.x = 8;
 				
 				// Pega uma peça aleatória do repositório e define como a matriz
-				var randPeca = rand(0, pecas.length-1);
-				var randRotacao = rand(0, pecas[randPeca].length-1);
-				pecaAtual.matriz = pecas[randPeca][randRotacao];
+				pecaAtual.matriz = getRandMatriz();
 			}
+
+			// Apaga pecaAtual e desenha 1 pixel abaixo
+			print(pecaAtual.y, pecaAtual.x, false);
+			pecaAtual.y++;
+			print(pecaAtual.y, pecaAtual.x, true);			
 
 			// console.log('loop');
 		}, config.velocidade);
-
 
 		// Verifica se alguma tecla foi pressionada
 		$("body").keydown(function(e) {
 		  	// left
 		  	if(e.keyCode == 37) {
-				print(pecaAtual.y, pecaAtual.x, false);
-				pecaAtual.x--;
-				print(pecaAtual.y, pecaAtual.x, true);
+				if(!colidiuEsquerda(pecaAtual)) {
+					print(pecaAtual.y, pecaAtual.x, false);
+					pecaAtual.x--;
+					print(pecaAtual.y, pecaAtual.x, true);
+				}
 
 		  	}
 		  	// right
 		  	else if(e.keyCode == 39) {
-				print(pecaAtual.y, pecaAtual.x, false);
-				pecaAtual.x++;
-				print(pecaAtual.y, pecaAtual.x, true);
+				if(!colidiuDireita(pecaAtual)) {
+					print(pecaAtual.y, pecaAtual.x, false);
+					pecaAtual.x++;
+					print(pecaAtual.y, pecaAtual.x, true);
+				}
 		  	}
 
 		  	// baixo
-		  	else if(e.keyCode == 40) {		  		
-		  		config.velocidade = 100;
-	  		}
-		});
-
-		$("body").keyup(function(e) {
-		  	// baixo
-		  	if(e.keyCode == 40) {
-		  		config.velocidade = 300;
+		  	else if(e.keyCode == 40) {
+		  		if(!colidiuY(pecaAtual) && !fimDoCampo(pecaAtual)) {
+			  		print(pecaAtual.y, pecaAtual.x, false);
+					pecaAtual.y++;
+					print(pecaAtual.y, pecaAtual.x, true);
+		  		}
 	  		}
 		});
 	});
+
+	function fimDoCampo(peca) {
+		return peca.y >= (matriz.y - peca.matriz.length);
+	}
 
 	function colidiuY(peca) {
 		// Verifica se tem alguma peça morta no lugar que a peça atual está
@@ -147,7 +145,9 @@
 				for (var i = 0; i < colisoresItem.length; i++) {
 					for (var j = 0; j < colisoresPecaAtual.length; j++) {
 						
-						if ( // BREAKPOINT AQUI
+						/* Verifica se as coordenadas são iguais (adicionando 1 para comparar em relação ao próximo loop)
+							[0] e [1] equivalem a X e Y retornados por getPxColisores() */
+						if (
 							colisoresItem[i][0] == colisoresPecaAtual[j][0] &&
 							colisoresItem[i][1] == (colisoresPecaAtual[j][1] + 1) 
 						) {
@@ -159,7 +159,6 @@
 					}
 				}
 
-				// BREAKPOINT AQUI
 				return false;
 			});
 
@@ -167,6 +166,75 @@
 		}
 	}
 
+	function colidiuEsquerda(peca) {
+		var colididas = pecasMortas.filter(function(pecaMorta) {
+			return peca.x <= (pecaMorta.x + peca.matriz[0].length);
+		});
+
+		if(colididas.length == 0) {	
+			return false;
+		} else {
+
+			// Verifica se também colidiram os pixels de dentro da matriz
+			var colididasPX = colididas.filter(function(item) {
+
+				var colisoresItem = getPxColisores(item);
+				var colisoresPecaAtual = getPxColisores(pecaAtual);
+
+				for (var i = 0; i < colisoresItem.length; i++) {
+					for (var j = 0; j < colisoresPecaAtual.length; j++) {
+						
+						if (
+							colisoresItem[i][0] == colisoresPecaAtual[j][0] - 1 &&
+							colisoresItem[i][1] == (colisoresPecaAtual[j][1])
+						) {
+							return true;
+						}
+					}
+				}
+
+				return false;
+			});
+
+			return colididasPX.length > 0;
+		}
+	}	
+
+	function colidiuDireita(peca) {
+		var colididas = pecasMortas.filter(function(pecaMorta) {
+			return peca.x >= (pecaMorta.x - peca.matriz[0].length);
+		});
+
+		if(colididas.length == 0) {	
+			return false;
+		} else {
+
+			// Verifica se também colidiram os pixels de dentro da matriz
+			var colididasPX = colididas.filter(function(item) {
+
+				var colisoresItem = getPxColisores(item);
+				var colisoresPecaAtual = getPxColisores(pecaAtual);
+
+				for (var i = 0; i < colisoresItem.length; i++) {
+					for (var j = 0; j < colisoresPecaAtual.length; j++) {
+						
+						if (
+							colisoresItem[i][0] == colisoresPecaAtual[j][0] + 1 &&
+							colisoresItem[i][1] == (colisoresPecaAtual[j][1])
+						) {
+							return true;
+						}
+					}
+				}
+
+				return false;
+			});
+
+			return colididasPX.length > 0;
+		}
+	}	
+
+	// Retorna as coordenadas de todos os pixels das extremidades de uma peça
 	function getPxColisores(peca) {
 
 		var matriz = peca.matriz;
@@ -204,7 +272,7 @@
 		}
 	}
 
-	// Ativa/Inativa pixel baseado no Id que é uma string com as coordenadas
+	// Ativa/Inativa pixel baseado no Id que é uma string com as coordenadas (ex: #25-19)
 	function setPixel(x, y, flag) {
 		if(flag == 1) {
 			$('#' + x + '-' + y).addClass('ativo');
