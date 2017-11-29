@@ -69,11 +69,9 @@
 			pecaAtual.y++;
 			print(pecaAtual.y, pecaAtual.x, true);
 			
-			if(
-				colidiuY(pecaAtual) ||
-				
+			if(colidiuY(pecaAtual) ||
 				// Se a peça atual chegar no chão...
-				pecaAtual.y == (matriz.y - pecaAtual.matriz.length)
+				(pecaAtual.y == (matriz.y - pecaAtual.matriz.length))
 			) {
 				var pecaMorta = {
 					x: pecaAtual.x,
@@ -89,7 +87,7 @@
 				// Pega uma peça aleatória do repositório e define como a matriz
 				var randPeca = rand(0, pecas.length-1);
 				var randRotacao = rand(0, pecas[randPeca].length-1);
-				pecaAtual.matriz = pecas[randPeca][randRotacao]
+				pecaAtual.matriz = pecas[randPeca][randRotacao];
 			}
 
 			// console.log('loop');
@@ -97,10 +95,9 @@
 	});
 
 	function colidiuY(peca) {
-		
 		// Verifica se tem alguma peça morta no lugar que a peça atual está
 		var colididas = pecasMortas.filter(function(pecaMorta) {
-			return peca.y == (pecaMorta.y - pecaMorta.matriz.length);
+			return peca.y >= (pecaMorta.y - peca.matriz.length);
 		});
 
 		if(colididas.length == 0) {	
@@ -112,33 +109,50 @@
 			// Verifica se também colidiram os pixels de dentro da matriz
 			var colididasPX = colididas.filter(function(item) {
 
-				for (var item_i=0; item_i < item.matriz.length; item_i++) {
-					for (var item_j=0; item_j < item.matriz[item_i].length; item_j++) {
+				var colisoresItem = getPxColisores(item);
+				var colisoresPecaAtual = getPxColisores(pecaAtual);
 
-
-						for (var atual_i=0; atual_i < pecaAtual.matriz.length; atual_i++) {
-							for (var atual_j=0; atual_j < pecaAtual.matriz[atual_i].length; atual_j++) {
+				for (var i = 0; i < colisoresItem.length; i++) {
+					for (var j = 0; j < colisoresPecaAtual.length; j++) {
 						
-								if((
-									item.matriz[item_i][item_j] == 1) && (pecaAtual.matriz[atual_i][atual_j] == 1)
-									&& 
-
-									// Verifica se a posição x dos dois são iguais
-									// (IMPLEMENTAR VERIFICAÇÃO TANTO NO X QUANTO NO Y)
-									item.x + item_j == pecaAtual.x + atual_j
-								) {
-									return true;
-								}
-							}
+						if ( // BREAKPOINT AQUI
+							colisoresItem[i][0] == colisoresPecaAtual[j][0] &&
+							colisoresItem[i][1] == (colisoresPecaAtual[j][1] + 1) 
+						) {
+							// DEBUG: Mostra quais dois pixels colidiram primeiro
+							// $('#' + colisoresItem[i][1] + '-' + colisoresItem[i][0]).css('background-color', 'orange');
+							// $('#' + (colisoresPecaAtual[j][1]) + '-' + colisoresPecaAtual[j][0] ).css('background-color', 'green');
+							return true;
 						}
-				    }
+					}
 				}
 
+				// BREAKPOINT AQUI
 				return false;
 			});
 
 			return colididasPX.length > 0;
 		}
+	}
+
+
+	function getPxColisores(peca) {
+
+		var matriz = peca.matriz;
+
+		var colisores = [];
+		for (var i = 0; i < matriz.length; i++) {
+			for (var j = 0; j < matriz[i].length; j++) {
+				
+				if (matriz[i][j] == 1) {
+					colisores.push([
+						(peca.x + j),
+						(peca.y + i) 
+					]);
+				}		
+			}			
+		}
+		return colisores;
 	}
 
 	/*
