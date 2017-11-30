@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Game</title>
+	<title>Tetris Game</title>
 	<style type="text/css">
 		body {
 			text-align: center;
@@ -31,9 +31,11 @@
 	</style>
 </head>
 <body>
-	<div id="matriz"></div>
-</body>
+<div id="matriz"></div>
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-59419372-7"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-59419372-7');</script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="pecas.js?v=1"></script>
 <script type="text/javascript">
@@ -294,4 +296,5 @@
 	  	return Math.floor(Math.random() * (max - min + 1)) + min;
 	}	
 </script>
+</body>
 </html>
