@@ -2,33 +2,8 @@
 <html>
 <head>
 	<title>Tetris Game</title>
-	<style type="text/css">
-		body {
-			text-align: center;
-		}
-		#matriz {
-			width: auto;
-			height: auto;
-			display: inline-block;
-			border: solid 1px black;
-			margin: 0 auto;
-			padding-top: 4px;
-		}
-
-		.bloco {
-			background-color: #ccc;
-			width: 15px;
-			height: 15px;
-			display: inline-block;
-			margin-left: 1px;
-			margin-right: 1px;
-			margin-top: -2px;
-		}
-
-		.bloco.ativo {
-			background-color: black;
-		}
-	</style>
+	<!-- <link rel="stylesheet" type="text/css" href="temas/default.css" /> -->
+	<link rel="stylesheet" type="text/css" href="temas/clean.css" />
 </head>
 <body>
 <div id="matriz"></div>
@@ -293,16 +268,19 @@
 
 	function gerarMatriz(x, y) {
 		for (var i = 0; i < y; i++) {
+			var blocos = '';
 			for (var j = 0; j < x; j++) {
-				$('#matriz').append('<div class="bloco" id="'+ i +'-'+ j +'"></div>');
+				blocos += '<div class="bloco" id="'+ i +'-'+ j +'"></div>';
 			}
-			$('#matriz').append('<br>');
+
+			$('#matriz').append('<div class="linha">'+ blocos +'</div>');
 		}
 	}
 
 	function rand(min, max) {
 	  	return Math.floor(Math.random() * (max - min + 1)) + min;
-	}	
+	}
+
 </script>
 </body>
 </html>
