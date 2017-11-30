@@ -41,7 +41,7 @@
 <script type="text/javascript">
 
 	/* TODO
-	//	- Não usar jquery
+	//	- Remover uso do jQuery
 	*/
 	var matriz = { x: 20, y: 30 };
 	var config = {
@@ -52,7 +52,7 @@
 	var pecaAtual = { 
 		x: 8, 
 		y: -1,
-		matriz: getRandMatriz()
+		matriz: getRandMatriz(),
 	};
 
 	var pecasMortas = [];
@@ -99,6 +99,14 @@
 				}
 
 		  	}
+
+		  	// up
+		  	if(e.keyCode == 38) {	
+				print(pecaAtual.y, pecaAtual.x, false);
+				pecaAtual.matriz = getRandMatriz();
+				print(pecaAtual.y, pecaAtual.x, true);
+		  	}
+
 		  	// right
 		  	else if(e.keyCode == 39) {
 				if(!colidiuDireita(pecaAtual)) {
