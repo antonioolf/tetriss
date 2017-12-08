@@ -1,6 +1,80 @@
-/* TODO
-//	- Remover uso do jQuery
-*/
+(function (document, $) {
+	
+	function Game() {
+		var campo;
+		var velocidade;
+		var pecaAtual;
+		var pecasMortas;
+
+		this.mudarTema = function() {
+
+		};
+
+		this.mataPeca = function(peca) {
+
+		};
+	}
+
+	function Campo() {
+		// Dimensões do campo
+		var x;
+		var y;
+
+		this.gerar = function() {
+
+		}
+
+		this.setPixel = function() {
+
+		};
+
+		this.fimDoCampo = function() {
+
+		};	
+	}
+
+	function Peca() {
+		var grupoPecas;
+		var rotacao;
+		var x;
+		var y;
+		var cor;
+
+		this.getMatrizAtual = function() {
+
+		};
+
+		this.colidiuY = function() {
+
+		};
+
+		this.colidiuEsquerda = function() {
+
+		};
+
+		this.colidiuDireita = function() {
+
+		};
+
+		this.rotaciona = function() {
+
+		};
+
+		this.print = function() {
+
+		};
+	}
+
+	function Util() {
+		this.rand = function() {
+
+		};
+	}
+
+}(document, jQuery));
+
+// -------------------------------------------------------
+
 var matriz = { x: 20, y: 30 };
 var config = {
 	velocidade: 300
@@ -55,7 +129,6 @@ $(document).ready(function() {
 				pecaAtual.x--;
 				print(pecaAtual.y, pecaAtual.x, true);
 			}
-
 	  	}
 
 	  	// up
@@ -90,7 +163,7 @@ function fimDoCampo(peca) {
 }
 
 function colidiuY(peca) {
-	// Verifica se tem alguma peça morta no lugar que a peça atual está
+	// Verifica se há alguma peça morta no lugar em que a peça atual está
 	var colididas = pecasMortas.filter(function(pecaMorta) {
 		
 										// Compensa o tamanho 
@@ -176,8 +249,6 @@ function colidiuDireita(peca) {
 	if(colididas.length == 0) {	
 		return false;
 	} else {
-
-		// Verifica se também colidiram os pixels de dentro da matriz
 		var colididasPX = colididas.filter(function(item) {
 
 			var colisoresItem = getPxColisores(item);
