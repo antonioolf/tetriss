@@ -73,6 +73,10 @@ var pecas = [
 	],
 ];
 
+function rand(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function getRandMatriz() {
 	var randPeca = rand(0, pecas.length-1);
 	var randRotacao = rand(0, pecas[randPeca].length-1);

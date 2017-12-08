@@ -1,84 +1,78 @@
-(function (document, $) {
+// --------------------- Classes ------------------------------
+
+function Game(params) {
+	this.campo = params.campo;
+	this.velocidade = params.velocidade;
+	this.pecasMortas = [];
 	
-	function Game() {
-		var campo;
-		var velocidade;
-		var pecaAtual;
-		var pecasMortas;
+	this.pecaAtual;
 
-		this.mudarTema = function() {
+	this.mataPeca = function(peca) {
+		this.pecasMortas.push(peca);
+	};
 
-		};
+	this.getPecasMortas = function() {
+		return this.pecasMortas;
+	};
 
-		this.mataPeca = function(peca) {
+	this.getCampo = function() {
+		return this.campo;
+	};
 
-		};
-	}
+	// Settings
 
-	function Campo() {
-		// Dimensões do campo
-		var x;
-		var y;
+	this.getVelocidade = function() {
+		return this.velocidade;
+	};
 
-		this.gerar = function() {
+	this.mudarTema = function() {
 
-		}
-
-		this.setPixel = function() {
-
-		};
-
-		this.fimDoCampo = function() {
-
-		};	
-	}
-
-	function Peca() {
-		var grupoPecas;
-		var rotacao;
-		var x;
-		var y;
-		var cor;
-
-		this.getMatrizAtual = function() {
-
-		};
-
-		this.colidiuY = function() {
-
-		};
-
-		this.colidiuEsquerda = function() {
-
-		};
-
-		this.colidiuDireita = function() {
-
-		};
-
-		this.rotaciona = function() {
-
-		};
-
-		this.print = function() {
-
-		};
-	}
-
-	function Util() {
-		this.rand = function() {
-
-		};
-	}
-
-}(document, jQuery));
-
-// -------------------------------------------------------
-
-var matriz = { x: 20, y: 30 };
-var config = {
-	velocidade: 300
+	};	
 }
+
+function Campo(params) {
+	// Dimensões do campo
+	this.x = params.x;
+	this.y = params.y;
+
+	this.gerar = function() {
+		for (var i = 0; i < this.y; i++) {
+			var blocos = '';
+			for (var j = 0; j < this.x; j++) {
+				blocos += '<div class="bloco" id="'+ i +'-'+ j +'"></div>';
+			}
+			$('#matriz').append('<div class="linha">'+ blocos +'</div>');
+		}
+	}
+
+	this.fimY = function(peca) {
+		return peca.y >= (this.y - peca.matriz.length);
+	};
+
+	this.fimEsquerda = function(peca) {
+		return peca.x <= 0;
+	};
+
+	this.fimDireita = function(peca) {
+		return peca.x >= (this.x - peca.matriz[0].length);
+	};
+
+	// Ativa/Inativa pixel baseado no Id que é uma string com as coordenadas (ex: #25-19)	
+	this.setPixel = function(x, y, flag) {
+		if(flag == 1) {
+			$('#' + x + '-' + y).addClass('ativo');
+		} else {
+			$('#' + x + '-' + y).removeClass('ativo');
+		}
+	};
+}
+
+// ------------------------------------------------------------
+
+var game = new Game({
+	campo: new Campo({ x: 20, y: 30 }),
+	velocidade: 300
+});
 
 // A primeira peça começa no centro e no topo
 var pecaAtual = { 
@@ -87,22 +81,19 @@ var pecaAtual = {
 	matriz: getRandMatriz(),
 };
 
-var pecasMortas = [];
 
 $(document).ready(function() {
-	gerarMatriz(matriz.x, matriz.y);
+	game.getCampo().gerar();
 	
 	// Loop principal
 	setInterval(function() {
 		
-		if(colidiuY(pecaAtual) || fimDoCampo(pecaAtual)) {
-			var pecaMorta = {
+		if(colidiuY(pecaAtual) || game.getCampo().fimY(pecaAtual)) {
+			game.mataPeca({
 				x: pecaAtual.x,
 				y: pecaAtual.y,
 				matriz: pecaAtual.matriz
-			};
-
-			pecasMortas.push(pecaMorta);
+			});
 			
 			// Volta peça atual para o topo
 			pecaAtual.y = -1;
@@ -118,18 +109,10 @@ $(document).ready(function() {
 		print(pecaAtual.y, pecaAtual.x, true);			
 
 		// console.log('loop');
-	}, config.velocidade);
+	}, game.getVelocidade());
 
 	// Verifica se alguma tecla foi pressionada
 	$("body").keydown(function(e) {
-	  	// left
-	  	if(e.keyCode == 37) {
-			if(!colidiuEsquerda(pecaAtual)) {
-				print(pecaAtual.y, pecaAtual.x, false);
-				pecaAtual.x--;
-				print(pecaAtual.y, pecaAtual.x, true);
-			}
-	  	}
 
 	  	// up
 	  	if(e.keyCode == 38) {	
@@ -138,8 +121,26 @@ $(document).ready(function() {
 			print(pecaAtual.y, pecaAtual.x, true);
 	  	}
 
+	  	// baixo
+	  	else if(e.keyCode == 40) {
+	  		if(!colidiuY(pecaAtual) && !game.getCampo().fimY(pecaAtual)) {
+		  		print(pecaAtual.y, pecaAtual.x, false);
+				pecaAtual.y++;
+				print(pecaAtual.y, pecaAtual.x, true);
+	  		}
+  		}
+
+		// left
+	  	if(e.keyCode == 37 && !game.getCampo().fimEsquerda(pecaAtual)) {
+			if(!colidiuEsquerda(pecaAtual)) {
+				print(pecaAtual.y, pecaAtual.x, false);
+				pecaAtual.x--;
+				print(pecaAtual.y, pecaAtual.x, true);
+			}
+	  	}	  	
+
 	  	// right
-	  	else if(e.keyCode == 39) {
+	  	else if(e.keyCode == 39 && !game.getCampo().fimDireita(pecaAtual)) {
 			if(!colidiuDireita(pecaAtual)) {
 				print(pecaAtual.y, pecaAtual.x, false);
 				pecaAtual.x++;
@@ -147,24 +148,12 @@ $(document).ready(function() {
 			}
 	  	}
 
-	  	// baixo
-	  	else if(e.keyCode == 40) {
-	  		if(!colidiuY(pecaAtual) && !fimDoCampo(pecaAtual)) {
-		  		print(pecaAtual.y, pecaAtual.x, false);
-				pecaAtual.y++;
-				print(pecaAtual.y, pecaAtual.x, true);
-	  		}
-  		}
 	});
 });
 
-function fimDoCampo(peca) {
-	return peca.y >= (matriz.y - peca.matriz.length);
-}
-
 function colidiuY(peca) {
 	// Verifica se há alguma peça morta no lugar em que a peça atual está
-	var colididas = pecasMortas.filter(function(pecaMorta) {
+	var colididas = game.getPecasMortas().filter(function(pecaMorta) {
 		
 										// Compensa o tamanho 
 										// da peça morta com o da atual
@@ -208,7 +197,7 @@ function colidiuY(peca) {
 }
 
 function colidiuEsquerda(peca) {
-	var colididas = pecasMortas.filter(function(pecaMorta) {
+	var colididas = game.getPecasMortas().filter(function(pecaMorta) {
 		return peca.x <= (pecaMorta.x + peca.matriz[0].length);
 	});
 
@@ -242,7 +231,7 @@ function colidiuEsquerda(peca) {
 }	
 
 function colidiuDireita(peca) {
-	var colididas = pecasMortas.filter(function(pecaMorta) {
+	var colididas = game.getPecasMortas().filter(function(pecaMorta) {
 		return peca.x >= (pecaMorta.x - peca.matriz[0].length);
 	});
 
@@ -305,32 +294,8 @@ function print(x, y, flag) {
 			// Evita que a peça atual apague os rastros das outras
 			if(pecaAtual.matriz[i][j] != 0) {
 				var valor = flag ? pecaAtual.matriz[i][j] : 0;
-				setPixel(x + i, y + j, valor);
+				game.getCampo().setPixel(x + i, y + j, valor);
 			}
 		}
 	}
-}
-
-// Ativa/Inativa pixel baseado no Id que é uma string com as coordenadas (ex: #25-19)
-function setPixel(x, y, flag) {
-	if(flag == 1) {
-		$('#' + x + '-' + y).addClass('ativo');
-	} else {
-		$('#' + x + '-' + y).removeClass('ativo');
-	}
-}
-
-function gerarMatriz(x, y) {
-	for (var i = 0; i < y; i++) {
-		var blocos = '';
-		for (var j = 0; j < x; j++) {
-			blocos += '<div class="bloco" id="'+ i +'-'+ j +'"></div>';
-		}
-
-		$('#matriz').append('<div class="linha">'+ blocos +'</div>');
-	}
-}
-
-function rand(min, max) {
-  	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
