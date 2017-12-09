@@ -35,7 +35,7 @@ function Game(params) {
 			
 											// Compensa o tamanho 
 											// da peça morta com o da atual
-			return peca.y >= (pecaMorta.y - peca.matriz.length);
+			return peca.y >= (pecaMorta.y - peca.getAltura());
 		});
 
 		if(colididas.length == 0) {	
@@ -47,8 +47,8 @@ function Game(params) {
 			// Verifica se também colidiram os pixels de dentro da matriz
 			var colididasPX = colididas.filter(function(item) {
 
-				var colisoresItem = getPxColisores(item);
-				var colisoresPecaAtual = getPxColisores(pecaAtual);
+				var colisoresItem = item.getPxColisores();
+				var colisoresPecaAtual = pecaAtual.getPxColisores();
 
 				for (var i = 0; i < colisoresItem.length; i++) {
 					for (var j = 0; j < colisoresPecaAtual.length; j++) {
@@ -62,6 +62,72 @@ function Game(params) {
 							// DEBUG: Mostra quais dois pixels colidiram primeiro
 							// $('#' + colisoresItem[i][1] + '-' + colisoresItem[i][0]).css('background-color', 'orange');
 							// $('#' + (colisoresPecaAtual[j][1]) + '-' + colisoresPecaAtual[j][0] ).css('background-color', 'green');
+							return true;
+						}
+					}
+				}
+
+				return false;
+			});
+
+			return colididasPX.length > 0;
+		}
+	}
+
+	this.colidiuEsquerda = function(peca) {
+		var colididas = this.getPecasMortas().filter(function(pecaMorta) {
+			return peca.x <= (pecaMorta.x + peca.getLargura());
+		});
+
+		if(colididas.length == 0) {	
+			return false;
+		} else {
+
+			// Verifica se também colidiram os pixels de dentro da matriz
+			var colididasPX = colididas.filter(function(item) {
+
+				var colisoresItem = item.getPxColisores();
+				var colisoresPecaAtual = pecaAtual.getPxColisores();
+
+				for (var i = 0; i < colisoresItem.length; i++) {
+					for (var j = 0; j < colisoresPecaAtual.length; j++) {
+						
+						if (
+							colisoresItem[i][0] == colisoresPecaAtual[j][0] - 1 &&
+							colisoresItem[i][1] == (colisoresPecaAtual[j][1])
+						) {
+							return true;
+						}
+					}
+				}
+
+				return false;
+			});
+
+			return colididasPX.length > 0;
+		}
+	}	
+
+	this.colidiuDireita = function(peca) {
+		var colididas = this.getPecasMortas().filter(function(pecaMorta) {
+			return peca.x >= (pecaMorta.x - peca.getLargura());
+		});
+
+		if(colididas.length == 0) {	
+			return false;
+		} else {
+			var colididasPX = colididas.filter(function(item) {
+
+				var colisoresItem = item.getPxColisores();
+				var colisoresPecaAtual = pecaAtual.getPxColisores();
+
+				for (var i = 0; i < colisoresItem.length; i++) {
+					for (var j = 0; j < colisoresPecaAtual.length; j++) {
+						
+						if (
+							colisoresItem[i][0] == colisoresPecaAtual[j][0] + 1 &&
+							colisoresItem[i][1] == (colisoresPecaAtual[j][1])
+						) {
 							return true;
 						}
 					}
@@ -136,8 +202,9 @@ function Peca(params) {
 	this.grupoPecas = obj.grupoPecas;
 	this.rotacao = obj.rotacao;
 
-	this.x = params.x;
-	this.y = params.y;
+	this.x = 8;
+	this.y = -1;
+
 	this.cor = params.cor;
 
 	this.desce = function(campo) {
@@ -162,17 +229,24 @@ function Peca(params) {
 		return Pecas.array[this.grupoPecas][this.rotacao];
 	};
 
-	this.colidiuY = function() {
+	// Retorna as coordenadas de todos os pixels das extremidades de uma peça
+	this.getPxColisores = function() {
+		var matriz = this.getMatrizAtual();
 
-	};
-
-	this.colidiuEsquerda = function() {
-
-	};
-
-	this.colidiuDireita = function() {
-
-	};
+		var colisores = [];
+		for (var i = 0; i < matriz.length; i++) {
+			for (var j = 0; j < matriz[i].length; j++) {
+				
+				if (matriz[i][j] == 1) {
+					colisores.push([
+						(this.getX() + j),
+						(this.getY() + i) 
+					]);
+				}		
+			}			
+		}
+		return colisores;
+	};	
 
 	this.rotaciona = function() {
 
@@ -205,10 +279,7 @@ var game = new Game({
 });
 
 // A primeira peça começa no centro e no topo
-var pecaAtual = new Peca({
-	x: 8,
-	y: -1,
-});
+var pecaAtual = new Peca({});
 
 $(document).ready(function() {
 	game.getCampo().gerar();
@@ -217,21 +288,11 @@ $(document).ready(function() {
 	setInterval(function() {
 		
 		if(game.colidiuY(pecaAtual) || game.getCampo().fimY(pecaAtual)) {
-			game.mataPeca({
-				x: pecaAtual.x,
-				y: pecaAtual.y,
-				matriz: pecaAtual.matriz
-			});
-			
-			// Volta peça atual para o topo
-			pecaAtual.y = -1;
-			pecaAtual.x = 8;
-			
-			// Pega uma peça aleatória do repositório e define como a matriz
-			pecaAtual.matriz = getRandMatriz();
+			game.mataPeca(pecaAtual);
+			pecaAtual = new Peca({});
 		}
 
-		pecaAtual.desce(campo);
+		pecaAtual.desce(game.getCampo());
 
 		// console.log('loop');
 	}, game.getVelocidade());
@@ -250,113 +311,23 @@ $(document).ready(function() {
 	  	// baixo
 	  	else if(e.keyCode == 40) {
 	  		if(!game.colidiuY(pecaAtual) && !game.getCampo().fimY(pecaAtual)) {
-		  		pecaAtual.desce(campo);
+		  		pecaAtual.desce(game.getCampo());
 	  		}
   		}
 
 		// left
 	  	if(e.keyCode == 37 && !game.getCampo().fimEsquerda(pecaAtual)) {
-			if(!colidiuEsquerda(pecaAtual)) {
-				print(pecaAtual.y, pecaAtual.x, false);
-				pecaAtual.x--;
-				print(pecaAtual.y, pecaAtual.x, true);
+			if(!game.colidiuEsquerda(pecaAtual)) {
+				pecaAtual.praEsquerda(game.getCampo());
 			}
 	  	}	  	
 
 	  	// right
 	  	else if(e.keyCode == 39 && !game.getCampo().fimDireita(pecaAtual)) {
-			if(!colidiuDireita(pecaAtual)) {
-				print(pecaAtual.y, pecaAtual.x, false);
-				pecaAtual.x++;
-				print(pecaAtual.y, pecaAtual.x, true);
+			if(!game.colidiuDireita(pecaAtual)) {
+				pecaAtual.praDireita(game.getCampo());
 			}
 	  	}
 
 	});
 });
-
-function colidiuEsquerda(peca) {
-	var colididas = game.getPecasMortas().filter(function(pecaMorta) {
-		return peca.x <= (pecaMorta.x + peca.matriz[0].length);
-	});
-
-	if(colididas.length == 0) {	
-		return false;
-	} else {
-
-		// Verifica se também colidiram os pixels de dentro da matriz
-		var colididasPX = colididas.filter(function(item) {
-
-			var colisoresItem = getPxColisores(item);
-			var colisoresPecaAtual = getPxColisores(pecaAtual);
-
-			for (var i = 0; i < colisoresItem.length; i++) {
-				for (var j = 0; j < colisoresPecaAtual.length; j++) {
-					
-					if (
-						colisoresItem[i][0] == colisoresPecaAtual[j][0] - 1 &&
-						colisoresItem[i][1] == (colisoresPecaAtual[j][1])
-					) {
-						return true;
-					}
-				}
-			}
-
-			return false;
-		});
-
-		return colididasPX.length > 0;
-	}
-}	
-
-function colidiuDireita(peca) {
-	var colididas = game.getPecasMortas().filter(function(pecaMorta) {
-		return peca.x >= (pecaMorta.x - peca.matriz[0].length);
-	});
-
-	if(colididas.length == 0) {	
-		return false;
-	} else {
-		var colididasPX = colididas.filter(function(item) {
-
-			var colisoresItem = getPxColisores(item);
-			var colisoresPecaAtual = getPxColisores(pecaAtual);
-
-			for (var i = 0; i < colisoresItem.length; i++) {
-				for (var j = 0; j < colisoresPecaAtual.length; j++) {
-					
-					if (
-						colisoresItem[i][0] == colisoresPecaAtual[j][0] + 1 &&
-						colisoresItem[i][1] == (colisoresPecaAtual[j][1])
-					) {
-						return true;
-					}
-				}
-			}
-
-			return false;
-		});
-
-		return colididasPX.length > 0;
-	}
-}	
-
-// Retorna as coordenadas de todos os pixels das extremidades de uma peça
-function getPxColisores(peca) {
-
-	var matriz = peca.matriz;
-
-	var colisores = [];
-	for (var i = 0; i < matriz.length; i++) {
-		for (var j = 0; j < matriz[i].length; j++) {
-			
-			if (matriz[i][j] == 1) {
-				colisores.push([
-					(peca.x + j),
-					(peca.y + i) 
-				]);
-			}		
-		}			
-	}
-	return colisores;
-}
