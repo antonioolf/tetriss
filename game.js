@@ -253,7 +253,15 @@ function Peca(params) {
 	};	
 
 	this.rotaciona = function() {
-
+		if(this.rotacao < Pecas.array[this.grupoPecas].length -1) {
+			campo.printPeca(this, false);
+			this.rotacao++;
+			campo.printPeca(this, true);
+		} else {
+			campo.printPeca(this, false);
+			this.rotacao = 0;
+			campo.printPeca(this, true);
+		}
 	};
 
 	this.getAltura = function() {
@@ -304,10 +312,7 @@ $(document).ready(function() {
 
 	  	// up
 	  	if(e.keyCode == 38) {	
-			
-			// print(pecaAtual.y, pecaAtual.x, false);
-			// pecaAtual.matriz = getRandMatriz();
-			// print(pecaAtual.y, pecaAtual.x, true);
+	  		pecaAtual.rotaciona();
 	  	}
 
 	  	// baixo
