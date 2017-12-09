@@ -153,7 +153,8 @@ function Campo(params) {
 		for (var i = 0; i < this.y; i++) {
 			var blocos = '';
 			for (var j = 0; j < this.x; j++) {
-				blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+  j +'-'+ i +'</div>';
+				// blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+  j +'-'+ i +'</div>';
+				blocos += '<div class="bloco" id="'+ j +'-'+ i +'"></div>';
 			}
 			$('#matriz').append('<div class="linha">'+ blocos +'</div>');
 		}
@@ -204,6 +205,7 @@ function Peca(params) {
 	this.grupoPecas = obj.grupoPecas;
 	this.rotacao = obj.rotacao;
 
+	// Novas peças sempre começam no centro e no topo
 	this.x = 8;
 	this.y = -1;
 
@@ -280,7 +282,6 @@ var game = new Game({
 	velocidade: 300
 });
 
-// A primeira peça começa no centro e no topo
 var pecaAtual = new Peca({});
 
 $(document).ready(function() {
@@ -296,7 +297,6 @@ $(document).ready(function() {
 
 		pecaAtual.desce(game.getCampo());
 
-		// console.log('loop');
 	}, game.getVelocidade());
 
 	// Verifica se alguma tecla foi pressionada
@@ -330,6 +330,5 @@ $(document).ready(function() {
 				pecaAtual.praDireita(game.getCampo());
 			}
 	  	}
-
 	});
 });
