@@ -19,7 +19,7 @@ function Game(params) {
 		return this.campo;
 	};
 
-	// Settings
+	// ---------- Settings ----------  
 
 	this.getVelocidade = function() {
 		return this.velocidade;
@@ -27,7 +27,53 @@ function Game(params) {
 
 	this.mudarTema = function() {
 
-	};	
+	};
+
+	this.colidiuY = function(peca) {
+		// Verifica se há alguma peça morta no lugar em que a peça atual está
+		var colididas = this.pecasMortas.filter(function(pecaMorta) {
+			
+											// Compensa o tamanho 
+											// da peça morta com o da atual
+			return peca.y >= (pecaMorta.y - peca.matriz.length);
+		});
+
+		if(colididas.length == 0) {	
+		
+			return false;
+		
+		} else {
+
+			// Verifica se também colidiram os pixels de dentro da matriz
+			var colididasPX = colididas.filter(function(item) {
+
+				var colisoresItem = getPxColisores(item);
+				var colisoresPecaAtual = getPxColisores(pecaAtual);
+
+				for (var i = 0; i < colisoresItem.length; i++) {
+					for (var j = 0; j < colisoresPecaAtual.length; j++) {
+						
+						/* Verifica se as coordenadas são iguais (adicionando 1 para comparar em relação ao próximo loop)
+							[0] e [1] equivalem a X e Y retornados por getPxColisores() */
+						if (
+							colisoresItem[i][0] == colisoresPecaAtual[j][0] &&
+							colisoresItem[i][1] == (colisoresPecaAtual[j][1] + 1) 
+						) {
+							// DEBUG: Mostra quais dois pixels colidiram primeiro
+							// $('#' + colisoresItem[i][1] + '-' + colisoresItem[i][0]).css('background-color', 'orange');
+							// $('#' + (colisoresPecaAtual[j][1]) + '-' + colisoresPecaAtual[j][0] ).css('background-color', 'green');
+							return true;
+						}
+					}
+				}
+
+				return false;
+			});
+
+			return colididasPX.length > 0;
+		}
+	}
+
 }
 
 function Campo(params) {
@@ -39,14 +85,14 @@ function Campo(params) {
 		for (var i = 0; i < this.y; i++) {
 			var blocos = '';
 			for (var j = 0; j < this.x; j++) {
-				blocos += '<div class="bloco" id="'+ i +'-'+ j +'"></div>';
+				blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+  j +'-'+ i +'</div>';
 			}
 			$('#matriz').append('<div class="linha">'+ blocos +'</div>');
 		}
 	}
 
 	this.fimY = function(peca) {
-		return peca.y >= (this.y - peca.matriz.length);
+		return peca.y >= (this.y - peca.getAltura());
 	};
 
 	this.fimEsquerda = function(peca) {
@@ -54,7 +100,7 @@ function Campo(params) {
 	};
 
 	this.fimDireita = function(peca) {
-		return peca.x >= (this.x - peca.matriz[0].length);
+		return peca.x >= (this.x - peca.getLargura());
 	};
 
 	// Ativa/Inativa pixel baseado no Id que é uma string com as coordenadas (ex: #25-19)	
@@ -65,22 +111,104 @@ function Campo(params) {
 			$('#' + x + '-' + y).removeClass('ativo');
 		}
 	};
+
+	/*
+	* Printa uma peça na posição X,Y
+	* Se a flag for false apaga todos os pixels da peça, sejam eles 0 ou 1
+	* Se a flag for true seta pixels de acordo com o array da peça */
+	this.printPeca = function(peca, flag) {
+		
+		for (var i = 0; i < peca.getAltura(); i++) {
+			for (var j = 0; j < peca.getLargura(); j++) {
+				
+				// Evita que a peça atual apague os rastros das outras
+				if(peca.getMatrizAtual()[i][j] != 0) {
+					var valor = flag ? pecaAtual.getMatrizAtual()[i][j] : 0;
+					this.setPixel(peca.getX() + i, peca.getY() + j, valor);
+				}
+			}
+		}
+	}
+}
+
+function Peca(params) {
+	var obj = Pecas.getRandPeca();
+	this.grupoPecas = obj.grupoPecas;
+	this.rotacao = obj.rotacao;
+
+	this.x = params.x;
+	this.y = params.y;
+	this.cor = params.cor;
+
+	this.desce = function(campo) {
+		campo.printPeca(this, false);
+		this.y++;
+		campo.printPeca(this, true);
+	};
+
+	this.praEsquerda = function() {
+		campo.printPeca(this, false);
+		this.x--;
+		campo.printPeca(this, true);
+	};
+
+	this.praDireita = function() {
+		campo.printPeca(this, false);
+		this.x++;
+		campo.printPeca(this, true);
+	};	
+
+	this.getMatrizAtual = function() {
+		return Pecas.array[this.grupoPecas][this.rotacao];
+	};
+
+	this.colidiuY = function() {
+
+	};
+
+	this.colidiuEsquerda = function() {
+
+	};
+
+	this.colidiuDireita = function() {
+
+	};
+
+	this.rotaciona = function() {
+
+	};
+
+	this.getAltura = function() {
+		return this.getMatrizAtual().length;
+	};
+
+	this.getLargura = function() {
+		return this.getMatrizAtual()[0].length;
+	};
+
+	this.getX = function() {
+		return this.x;
+	};
+
+	this.getY = function() {
+		return this.y;
+	}
 }
 
 // ------------------------------------------------------------
 
+var campo = new Campo({ x: 20, y: 30 });
+
 var game = new Game({
-	campo: new Campo({ x: 20, y: 30 }),
+	campo: campo,
 	velocidade: 300
 });
 
 // A primeira peça começa no centro e no topo
-var pecaAtual = { 
-	x: 8, 
+var pecaAtual = new Peca({
+	x: 8,
 	y: -1,
-	matriz: getRandMatriz(),
-};
-
+});
 
 $(document).ready(function() {
 	game.getCampo().gerar();
@@ -88,7 +216,7 @@ $(document).ready(function() {
 	// Loop principal
 	setInterval(function() {
 		
-		if(colidiuY(pecaAtual) || game.getCampo().fimY(pecaAtual)) {
+		if(game.colidiuY(pecaAtual) || game.getCampo().fimY(pecaAtual)) {
 			game.mataPeca({
 				x: pecaAtual.x,
 				y: pecaAtual.y,
@@ -103,10 +231,7 @@ $(document).ready(function() {
 			pecaAtual.matriz = getRandMatriz();
 		}
 
-		// Apaga pecaAtual e desenha 1 pixel abaixo
-		print(pecaAtual.y, pecaAtual.x, false);
-		pecaAtual.y++;
-		print(pecaAtual.y, pecaAtual.x, true);			
+		pecaAtual.desce(campo);
 
 		// console.log('loop');
 	}, game.getVelocidade());
@@ -116,17 +241,16 @@ $(document).ready(function() {
 
 	  	// up
 	  	if(e.keyCode == 38) {	
-			print(pecaAtual.y, pecaAtual.x, false);
-			pecaAtual.matriz = getRandMatriz();
-			print(pecaAtual.y, pecaAtual.x, true);
+			
+			// print(pecaAtual.y, pecaAtual.x, false);
+			// pecaAtual.matriz = getRandMatriz();
+			// print(pecaAtual.y, pecaAtual.x, true);
 	  	}
 
 	  	// baixo
 	  	else if(e.keyCode == 40) {
-	  		if(!colidiuY(pecaAtual) && !game.getCampo().fimY(pecaAtual)) {
-		  		print(pecaAtual.y, pecaAtual.x, false);
-				pecaAtual.y++;
-				print(pecaAtual.y, pecaAtual.x, true);
+	  		if(!game.colidiuY(pecaAtual) && !game.getCampo().fimY(pecaAtual)) {
+		  		pecaAtual.desce(campo);
 	  		}
   		}
 
@@ -150,51 +274,6 @@ $(document).ready(function() {
 
 	});
 });
-
-function colidiuY(peca) {
-	// Verifica se há alguma peça morta no lugar em que a peça atual está
-	var colididas = game.getPecasMortas().filter(function(pecaMorta) {
-		
-										// Compensa o tamanho 
-										// da peça morta com o da atual
-		return peca.y >= (pecaMorta.y - peca.matriz.length);
-	});
-
-	if(colididas.length == 0) {	
-	
-		return false;
-	
-	} else {
-
-		// Verifica se também colidiram os pixels de dentro da matriz
-		var colididasPX = colididas.filter(function(item) {
-
-			var colisoresItem = getPxColisores(item);
-			var colisoresPecaAtual = getPxColisores(pecaAtual);
-
-			for (var i = 0; i < colisoresItem.length; i++) {
-				for (var j = 0; j < colisoresPecaAtual.length; j++) {
-					
-					/* Verifica se as coordenadas são iguais (adicionando 1 para comparar em relação ao próximo loop)
-						[0] e [1] equivalem a X e Y retornados por getPxColisores() */
-					if (
-						colisoresItem[i][0] == colisoresPecaAtual[j][0] &&
-						colisoresItem[i][1] == (colisoresPecaAtual[j][1] + 1) 
-					) {
-						// DEBUG: Mostra quais dois pixels colidiram primeiro
-						// $('#' + colisoresItem[i][1] + '-' + colisoresItem[i][0]).css('background-color', 'orange');
-						// $('#' + (colisoresPecaAtual[j][1]) + '-' + colisoresPecaAtual[j][0] ).css('background-color', 'green');
-						return true;
-					}
-				}
-			}
-
-			return false;
-		});
-
-		return colididasPX.length > 0;
-	}
-}
 
 function colidiuEsquerda(peca) {
 	var colididas = game.getPecasMortas().filter(function(pecaMorta) {
@@ -280,22 +359,4 @@ function getPxColisores(peca) {
 		}			
 	}
 	return colisores;
-}
-
-/*
-* Printa uma peça na posição X,Y
-* Se a flag for false apaga todos os pixels da peça, sejam eles 0 ou 1
-* Se a flag for true seta pixels de acordo com o array da peça */
-function print(x, y, flag) {
-	
-	for (var i = 0; i < pecaAtual.matriz.length; i++) {
-		for (var j = 0; j < pecaAtual.matriz[i].length; j++) {
-			
-			// Evita que a peça atual apague os rastros das outras
-			if(pecaAtual.matriz[i][j] != 0) {
-				var valor = flag ? pecaAtual.matriz[i][j] : 0;
-				game.getCampo().setPixel(x + i, y + j, valor);
-			}
-		}
-	}
 }

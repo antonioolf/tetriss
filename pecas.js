@@ -1,84 +1,90 @@
-var pecas = [
-	[
+var Pecas = {
+	array: [
 		[
-			[0, 0, 1],
-			[1, 1, 1],
+			[
+				[0, 0, 1],
+				[1, 1, 1],
+			],
+			[
+				[1, 0],
+				[1, 0],
+				[1, 1],
+			],
+			[
+				[1, 1, 1],
+				[1, 0, 0],
+			],
+			[
+				[1, 1],
+				[0, 1],
+				[0, 1],
+			],
 		],
+
 		[
-			[1, 0],
-			[1, 0],
-			[1, 1],
+			[
+				[0, 1, 0],
+				[1, 1, 1],
+			],
+			[
+				[1, 0],
+				[1, 1],
+				[1, 0],
+			],
+			[
+				[1, 1, 1],
+				[0, 1, 0],
+			],
+			[
+				[0, 1],
+				[1, 1],
+				[0, 1],
+			],
 		],
+
 		[
-			[1, 1, 1],
-			[1, 0, 0],
+			[
+				[0, 1, 1],
+				[1, 1, 0],
+			],
+			[
+				[1, 0],
+				[1, 1],
+				[0, 1],
+			],
 		],
+
 		[
-			[1, 1],
-			[0, 1],
-			[0, 1],
+			[
+				[1, 1],
+				[1, 1],
+			],
+		],
+
+		[
+			[
+				[1],
+				[1],
+				[1],
+				[1],
+			],
+			[
+				[1, 1, 1, 1],
+			],		
 		],
 	],
 
-	[
-		[
-			[0, 1, 0],
-			[1, 1, 1],
-		],
-		[
-			[1, 0],
-			[1, 1],
-			[1, 0],
-		],
-		[
-			[1, 1, 1],
-			[0, 1, 0],
-		],
-		[
-			[0, 1],
-			[1, 1],
-			[0, 1],
-		],
-	],
-
-	[
-		[
-			[0, 1, 1],
-			[1, 1, 0],
-		],
-		[
-			[1, 0],
-			[1, 1],
-			[0, 1],
-		],
-	],
-
-	[
-		[
-			[1, 1],
-			[1, 1],
-		],
-	],
-
-	[
-		[
-			[1],
-			[1],
-			[1],
-			[1],
-		],
-		[
-			[1, 1, 1, 1],
-		],		
-	],
-];
-
-function rand(min, max) {
+	rand: function(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+	},
 
-function getRandMatriz() {
-	var randPeca = rand(0, pecas.length-1);
-	var randRotacao = rand(0, pecas[randPeca].length-1);
-	return pecas[randPeca][randRotacao];
-}
+	getRandPeca: function() {
+		var grupoPecas = Pecas.rand(0, Pecas.array.length-1);
+		var rotacao = Pecas.rand(0, Pecas.array[grupoPecas].length-1);
+
+		return {
+			grupoPecas: grupoPecas,
+			rotacao: rotacao
+		}
+	}
+};
