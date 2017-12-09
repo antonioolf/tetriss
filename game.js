@@ -148,6 +148,8 @@ function Campo(params) {
 	this.y = params.y;
 
 	this.gerar = function() {
+		// i = y
+		// j = x
 		for (var i = 0; i < this.y; i++) {
 			var blocos = '';
 			for (var j = 0; j < this.x; j++) {
@@ -190,7 +192,7 @@ function Campo(params) {
 				// Evita que a peça atual apague os rastros das outras
 				if(peca.getMatrizAtual()[i][j] != 0) {
 					var valor = flag ? pecaAtual.getMatrizAtual()[i][j] : 0;
-					this.setPixel(peca.getX() + i, peca.getY() + j, valor);
+					this.setPixel(peca.getX() + j, peca.getY() + i , valor);
 				}
 			}
 		}
