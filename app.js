@@ -17,6 +17,8 @@ $(document).ready(function() {
 			game.mataPeca(pecaAtual);
 			pecaAtual = new Peca({});
 
+			// Pontua (ou não) sempre que tiver linhas cheias no campo
+			game.pontuar();
 		}
 
 		pecaAtual.desce(game.getCampo());

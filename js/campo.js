@@ -9,8 +9,8 @@ function Campo(params) {
 		for (var i = 0; i < this.y; i++) {
 			var blocos = '';
 			for (var j = 0; j < this.x; j++) {
-				// blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+  j +'-'+ i +'</div>';
-				blocos += '<div class="bloco" id="'+ j +'-'+ i +'"></div>';
+				blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+  j +'-'+ i +'</div>';
+				// blocos += '<div class="bloco" id="'+ j +'-'+ i +'"></div>';
 			}
 			$('#matriz').append('<div class="linha">'+ blocos +'</div>');
 		}
@@ -54,4 +54,25 @@ function Campo(params) {
 			}
 		}
 	}
+
+	this.getLinhasCheias = function() {
+		var cheias = [];
+
+		for (var y = 0; y < this.y; y++) {
+			cheia = true;
+
+			for (var x = 0; x < this.x; x++) {
+				if($('#' + x + '-' + y).hasClass('ativo') == false) {
+					cheia = false;
+					break;
+				}
+			}
+
+			if(cheia) {
+				cheias.push(y);
+			}
+		}
+
+		return cheias;
+	};
 }

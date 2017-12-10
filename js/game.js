@@ -140,12 +140,27 @@ function Game(params) {
 		}
 	};
 
-	this.pontuou = function() {
+	this.pontuar = function() {
 		// Solução
 		/*
 			Salvar matriz na classe Peca além da rotação e grupoPecas
 			para possibilitar fazer alterações na matriz da peça sem afetar a original
-
 		*/
-	};
+		var linhasCheias = this.getCampo().getLinhasCheias();
+		
+		if(linhasCheias.length == 0) {
+			return false;
+		} else {
+			linhasCheias.forEach(function(linha) {
+				this.pecasMortas.forEach(function(peca) {
+
+					// Resolver essa treta aqui
+					// if(linha == ((peca.getAltura() + peca.getY()))) {
+					// 	peca.destroiLinha(peca.getY() - linha);
+					// }
+
+				}.bind(this));
+			}.bind(this));
+		}
+	};	
 }

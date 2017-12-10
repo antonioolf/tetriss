@@ -81,10 +81,12 @@ var Pecas = {
 	getRandPeca: function() {
 		var grupoPecas = Pecas.rand(0, Pecas.array.length-1);
 		var rotacao = Pecas.rand(0, Pecas.array[grupoPecas].length-1);
+		var matriz = Pecas.array[grupoPecas][rotacao];
 
 		return {
 			grupoPecas: grupoPecas,
-			rotacao: rotacao
+			rotacao: rotacao,
+			matriz: matriz,
 		}
 	}
 };

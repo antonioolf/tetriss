@@ -2,6 +2,7 @@ function Peca(params) {
 	var obj = Pecas.getRandPeca();
 	this.grupoPecas = obj.grupoPecas;
 	this.rotacao = obj.rotacao;
+	this.matriz = obj.matriz;
 
 	// Novas peças sempre começam no centro e no topo
 	this.x = 8;
@@ -9,26 +10,38 @@ function Peca(params) {
 
 	this.cor = params.cor;
 
+	this.getMatrizAtual = function() {
+		return this.matriz;
+	};
+
+	this.destroiLinha = function(linha) {
+		var matriz = this.getMatrizAtual();
+		matriz.splice(linha, 1);
+		this.matriz = matriz;
+		this.reprint();
+	};
+
+	this.reprint = function() {
+		campo.printPeca(this, false);
+		campo.printPeca(this, true);		
+	};	
+
 	this.desce = function(campo) {
 		campo.printPeca(this, false);
 		this.y++;
 		campo.printPeca(this, true);
 	};
 
-	this.praEsquerda = function() {
+	this.praEsquerda = function(campo) {
 		campo.printPeca(this, false);
 		this.x--;
 		campo.printPeca(this, true);
 	};
 
-	this.praDireita = function() {
+	this.praDireita = function(campo) {
 		campo.printPeca(this, false);
 		this.x++;
 		campo.printPeca(this, true);
-	};	
-
-	this.getMatrizAtual = function() {
-		return Pecas.array[this.grupoPecas][this.rotacao];
 	};
 
 	// Retorna as coordenadas de todos os pixels das extremidades de uma peça
@@ -51,15 +64,16 @@ function Peca(params) {
 	};	
 
 	this.rotaciona = function() {
+		campo.printPeca(this, false);
+		
 		if(this.rotacao < Pecas.array[this.grupoPecas].length -1) {
-			campo.printPeca(this, false);
 			this.rotacao++;
-			campo.printPeca(this, true);
 		} else {
-			campo.printPeca(this, false);
 			this.rotacao = 0;
-			campo.printPeca(this, true);
 		}
+
+		this.matriz = Pecas.array[this.grupoPecas][this.rotacao];
+		campo.printPeca(this, true);
 	};
 
 	this.getAltura = function() {
