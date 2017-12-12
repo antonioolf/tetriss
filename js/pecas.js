@@ -83,10 +83,13 @@ var Pecas = {
 		var rotacao = Pecas.rand(0, Pecas.array[grupoPecas].length-1);
 		var matriz = Pecas.array[grupoPecas][rotacao];
 
-		return {
+		var obj = {
 			grupoPecas: grupoPecas,
 			rotacao: rotacao,
 			matriz: matriz,
-		}
+		};
+
+		// Evita que os objetos mantenham a referencia, já que cada peça terá um estado próprio
+		return JSON.parse(JSON.stringify(obj));
 	}
 };

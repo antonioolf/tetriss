@@ -1,0 +1,30 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  0
+  0
+0 0 0
+
+if(linha >= peca.y || linha <= peca.y + peca.altura) {
+	destroi(linha - peca.y)
+}

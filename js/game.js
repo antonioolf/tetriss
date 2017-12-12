@@ -159,6 +159,10 @@ function Game(params) {
 					// 	peca.destroiLinha(peca.getY() - linha);
 					// }
 
+					if(linha >= (peca.getY() +1) || linha <= (peca.getY() + 1) + peca.getAltura()) {
+						// destroi(linha - peca.y)
+						peca.destroiLinha(linha - (peca.getY()+1) );
+					}
 				}.bind(this));
 			}.bind(this));
 		}
