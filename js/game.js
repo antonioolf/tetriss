@@ -154,14 +154,18 @@ function Game(params) {
 			linhasCheias.forEach(function(linha) {
 				this.pecasMortas.forEach(function(peca) {
 
-					// Resolver essa treta aqui
-					// if(linha == ((peca.getAltura() + peca.getY()))) {
-					// 	peca.destroiLinha(peca.getY() - linha);
-					// }
-
 					if(linha >= (peca.getY() +1) || linha <= (peca.getY() + 1) + peca.getAltura()) {
-						// destroi(linha - peca.y)
-						peca.destroiLinha(linha - (peca.getY()+1) );
+						var index = linha - peca.getY();
+						
+						// Nesse teste de debug a linha não muda 
+						// $('#' + peca.getX() +'-'+ linha ).css('background-color', 'orange');
+
+						peca.destroiLinha(peca.getY() - linha, this.getCampo());
+
+						console.log('linha: '+ linha);
+						console.log('peca.getY(): '+ peca.getY());
+						console.log('peca.getAltura(): '+ peca.getAltura());
+						console.log('------------------------------------------');
 					}
 				}.bind(this));
 			}.bind(this));

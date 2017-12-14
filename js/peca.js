@@ -8,23 +8,25 @@ function Peca(params) {
 	this.x = 8;
 	this.y = -1;
 
-	this.cor = params.cor;
+	this.cor = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+
+	this.getCor = function() {
+		return this.cor;
+	}
 
 	this.getMatrizAtual = function() {
 		return this.matriz;
 	};
 
-	this.destroiLinha = function(linha) {
-		var matriz = this.getMatrizAtual();
-		matriz.splice(linha, 1);
-		this.matriz = matriz;
-		this.reprint();
-	};
-
-	this.reprint = function() {
+	this.destroiLinha = function(linha, campo) {
 		campo.printPeca(this, false);
-		campo.printPeca(this, true);		
-	};	
+		var m = this.getMatrizAtual();
+		var matriz = JSON.parse(JSON.stringify(m));
+		matriz.splice(linha, 1);
+		this.y++;
+		this.matriz = matriz;
+		campo.printPeca(this, true);
+	};
 
 	this.desce = function(campo) {
 		campo.printPeca(this, false);
@@ -61,7 +63,7 @@ function Peca(params) {
 			}			
 		}
 		return colisores;
-	};	
+	};
 
 	this.rotaciona = function() {
 		campo.printPeca(this, false);
