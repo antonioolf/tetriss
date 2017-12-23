@@ -44,9 +44,9 @@ function Campo(params) {
 		} else {
 			$('#' + x + '-' + y).removeClass('ativo');
 			if(cor != null) {
-				$('#' + x + '-' + y).css('background-color', 'transparent');
+				$('#' + x + '-' + y).css('background-color', '#f9f9f9');
 			}
-			
+
 		}
 	};
 
@@ -89,7 +89,7 @@ function Campo(params) {
 		return cheias;
 	};
 
-	this.desceTodasAcima = function() {
+	this.desceTodasAcima = function(peca) {
 		
 	};
 }

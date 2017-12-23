@@ -18,6 +18,15 @@ function Peca(params) {
 		return this.matriz;
 	};
 
+	// Verifica se a linha pode cortar a peça em algum lugar
+	this.contemLinha = function(linha) {
+		return ((linha >= this.getY()) && (linha < (this.getY() + this.getAltura())));
+	};
+
+	this.getIndiceCortadoPelaLinha = function(linha) {
+		return linha - this.getY();
+	};
+
 	this.destroiLinha = function(linha, campo) {
 		campo.printPeca(this, false);
 		var m = this.getMatrizAtual();
@@ -25,7 +34,6 @@ function Peca(params) {
 		matriz.splice(linha, 1);
 		
 		this.y++;
-		campo.desceTodasAcima(this);
 
 		this.matriz = matriz;
 		campo.printPeca(this, true);

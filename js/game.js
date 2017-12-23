@@ -141,26 +141,24 @@ function Game(params) {
 	};
 
 	this.pontuar = function() {
-		// Solução
-		/*
-			Salvar matriz na classe Peca além da rotação e grupoPecas
-			para possibilitar fazer alterações na matriz da peça sem afetar a original
-		*/
 		var linhasCheias = this.getCampo().getLinhasCheias();
 		
 		if(linhasCheias.length == 0) {
 			return false;
 		} else {
 			linhasCheias.forEach(function(linha) {
-				this.pecasMortas.forEach(function(peca) {				
-
-					if((linha >= peca.getY()) && linha < (peca.getY() + 1) + peca.getAltura()) {
-						console.log(peca.getMatrizAtual());
-						var index = linha - peca.getY();
-
-						peca.destroiLinha(index, this.getCampo());
+				this.pecasMortas.forEach(function(peca) {
+					if(peca.contemLinha(linha)) {
+						var indice = peca.getIndiceCortadoPelaLinha(linha);
+						
+						if(indice >= 0) {
+							peca.destroiLinha(indice, this.getCampo());
+						}
 					}
 				}.bind(this));
+
+				// this.getCampo().desceTodasAcima(linha);
+
 			}.bind(this));
 		}
 	};	
