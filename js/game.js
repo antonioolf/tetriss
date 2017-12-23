@@ -147,19 +147,32 @@ function Game(params) {
 			return false;
 		} else {
 			linhasCheias.forEach(function(linha) {
-				this.pecasMortas.forEach(function(peca) {
-					if(peca.contemLinha(linha)) {
-						var indice = peca.getIndiceCortadoPelaLinha(linha);
-						
-						if(indice >= 0) {
-							peca.destroiLinha(indice, this.getCampo());
-						}
-					}
-				}.bind(this));
-
-				// this.getCampo().desceTodasAcima(linha);
-
+				this.destroiLinha(linha);
+				this.desceTodasAcima(linha);
 			}.bind(this));
 		}
+	};
+
+	this.destroiLinha = function(linha) {
+
+		this.pecasMortas.forEach(function(peca) {
+			if(peca.contemLinha(linha)) {
+				var indice = peca.getIndiceCortadoPelaLinha(linha);
+				
+				if(indice >= 0) {
+					peca.destroiIndice(indice, this.getCampo());
+				}
+			}
+		}.bind(this));
+	};
+
+	this.desceTodasAcima = function(linha) {
+		var naoAtingidas = this.pecasMortas.filter(function(peca) {
+			return !peca.contemLinha(linha);
+		}.bind(this));
+
+		naoAtingidas.forEach(function(peca) {
+			peca.desce(this.getCampo());
+		}.bind(this));
 	};	
 }

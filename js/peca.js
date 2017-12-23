@@ -27,7 +27,7 @@ function Peca(params) {
 		return linha - this.getY();
 	};
 
-	this.destroiLinha = function(linha, campo) {
+	this.destroiIndice = function(linha, campo) {
 		campo.printPeca(this, false);
 		var m = this.getMatrizAtual();
 		var matriz = JSON.parse(JSON.stringify(m));

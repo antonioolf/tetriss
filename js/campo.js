@@ -88,8 +88,4 @@ function Campo(params) {
 
 		return cheias;
 	};
-
-	this.desceTodasAcima = function(peca) {
-		
-	};
 }
