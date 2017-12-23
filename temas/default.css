@@ -1,6 +1,7 @@
 body {
 	text-align: center;
 	font-size: 6px;
+	font-family: arial;
 }
 #matriz {
 	width: auto;
@@ -12,12 +13,16 @@ body {
 
 .bloco {
 	background-color: #f9f9f9;
-	width: 15px;
-	height: 15px;
+	width: 30px;
+	height: 30px;
 	display: inline-block;
 	margin-left: 1px;
 	margin-right: 1px;
 	margin-top: 1px;
+
+    vertical-align: top;
+    line-height: 25px;
+    font-size: 15px;
 }
 
 .bloco.ativo {

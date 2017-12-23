@@ -9,8 +9,13 @@ function Campo(params) {
 		for (var i = 0; i < this.y; i++) {
 			var blocos = '';
 			for (var j = 0; j < this.x; j++) {
-				// blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+  j +'-'+ i +'</div>';
-				blocos += '<div class="bloco" id="'+ j +'-'+ i +'"></div>';
+				if(j == 0) {
+					blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+ i +'</div>';
+				} else {
+					blocos += '<div class="bloco" id="'+ j +'-'+ i +'"></div>';
+				}
+
+				// blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+  j +'-'+ i +'</div>';		
 			}
 			$('#matriz').append('<div class="linha">'+ blocos +'</div>');
 		}
@@ -29,16 +34,19 @@ function Campo(params) {
 	};
 
 	// Ativa/Inativa pixel baseado no Id que é uma string com as coordenadas (ex: #25-19)	
-	this.setPixel = function(x, y, flag/*, cor*/) {
+	this.setPixel = function(x, y, flag, cor) {
 		if(flag == 1) {
 			$('#' + x + '-' + y).addClass('ativo');
 			$('#' + x + '-' + y).addClass('ativo');
-			// if(cor != null) {
-			// 	$('#' + x + '-' + y).css('background-color', cor);
-			// }
+			if(cor != null) {
+				$('#' + x + '-' + y).css('background-color', cor);
+			}
 		} else {
 			$('#' + x + '-' + y).removeClass('ativo');
-			// $('#' + x + '-' + y).css('background-color', 'transparent');
+			if(cor != null) {
+				$('#' + x + '-' + y).css('background-color', 'transparent');
+			}
+			
 		}
 	};
 
@@ -54,7 +62,7 @@ function Campo(params) {
 				// Evita que a peça atual apague os rastros das outras
 				if(peca.getMatrizAtual()[i][j] != 0) {
 					var valor = flag ? peca.getMatrizAtual()[i][j] : 0;
-					this.setPixel(peca.getX() + j, peca.getY() + i , valor/*, peca.getCor()*/);
+					this.setPixel(peca.getX() + j, peca.getY() + i , valor, peca.getCor());
 				}
 			}
 		}
@@ -63,10 +71,10 @@ function Campo(params) {
 	this.getLinhasCheias = function() {
 		var cheias = [];
 
-		for (var y = 0; y < this.y; y++) {
+		for (var y=this.y-1; y>=0 ; y--) {
 			cheia = true;
 
-			for (var x = 0; x < this.x; x++) {
+			for (var x=this.x-1; x>=0 ; x--) {
 				if($('#' + x + '-' + y).hasClass('ativo') == false) {
 					cheia = false;
 					break;
@@ -79,5 +87,9 @@ function Campo(params) {
 		}
 
 		return cheias;
+	};
+
+	this.desceTodasAcima = function() {
+		
 	};
 }

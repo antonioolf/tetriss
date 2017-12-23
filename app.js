@@ -1,4 +1,4 @@
-var campo = new Campo({ x: 20, y: 30 });
+var campo = new Campo({ x: 10, y: 18 });
 
 var game = new Game({
 	campo: campo,

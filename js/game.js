@@ -152,20 +152,13 @@ function Game(params) {
 			return false;
 		} else {
 			linhasCheias.forEach(function(linha) {
-				this.pecasMortas.forEach(function(peca) {
+				this.pecasMortas.forEach(function(peca) {				
 
-					if(linha >= (peca.getY() +1) || linha <= (peca.getY() + 1) + peca.getAltura()) {
+					if((linha >= peca.getY()) && linha < (peca.getY() + 1) + peca.getAltura()) {
+						console.log(peca.getMatrizAtual());
 						var index = linha - peca.getY();
-						
-						// Nesse teste de debug a linha não muda 
-						// $('#' + peca.getX() +'-'+ linha ).css('background-color', 'orange');
 
-						peca.destroiLinha(peca.getY() - linha, this.getCampo());
-
-						console.log('linha: '+ linha);
-						console.log('peca.getY(): '+ peca.getY());
-						console.log('peca.getAltura(): '+ peca.getAltura());
-						console.log('------------------------------------------');
+						peca.destroiLinha(index, this.getCampo());
 					}
 				}.bind(this));
 			}.bind(this));

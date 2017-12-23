@@ -5,7 +5,7 @@ function Peca(params) {
 	this.matriz = obj.matriz;
 
 	// Novas peças sempre começam no centro e no topo
-	this.x = 8;
+	this.x = 4;
 	this.y = -1;
 
 	this.cor = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
@@ -23,7 +23,10 @@ function Peca(params) {
 		var m = this.getMatrizAtual();
 		var matriz = JSON.parse(JSON.stringify(m));
 		matriz.splice(linha, 1);
+		
 		this.y++;
+		campo.desceTodasAcima(this);
+
 		this.matriz = matriz;
 		campo.printPeca(this, true);
 	};
