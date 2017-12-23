@@ -141,15 +141,15 @@ function Game(params) {
 	};
 
 	this.pontuar = function() {
-		var linhasCheias = this.getCampo().getLinhasCheias();
-		
-		if(linhasCheias.length == 0) {
-			return false;
-		} else {
-			linhasCheias.forEach(function(linha) {
-				this.destroiLinha(linha);
-				this.desceTodasAcima(linha);
-			}.bind(this));
+		var linhaCheia;
+
+		while(linhaCheia = this.getCampo().getLinhaCheia()) {
+			if(!linhaCheia) {
+				return false;
+			} else {				
+				this.destroiLinha(linhaCheia);
+				this.desceTodasAcima(linhaCheia);
+			}
 		}
 	};
 

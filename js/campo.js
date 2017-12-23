@@ -88,4 +88,23 @@ function Campo(params) {
 
 		return cheias;
 	};
+
+	this.getLinhaCheia = function() {
+		var cheia;
+
+		for (var y=this.y-1; y>=0 ; y--) {
+			cheia = true;
+
+			for (var x=this.x-1; x>=0 ; x--) {
+				if($('#' + x + '-' + y).hasClass('ativo') == false) {
+					cheia = false;
+					break;
+				}
+			}
+
+			if(cheia) {
+				return y;
+			}
+		}
+	};
 }
