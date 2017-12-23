@@ -28,3 +28,20 @@ body {
 .bloco.ativo {
 	background-color: black;
 }
+
+
+.ativo.cor-1 {
+	background-color: #29abe9 !important;
+}
+.ativo.cor-2 {
+	background-color: #c42381 !important;
+}
+.ativo.cor-3 {
+	background-color: #e15458 !important;
+}
+.ativo.cor-4 {
+	background-color: #a41468 !important;
+}
+.ativo.cor-5 {
+	background-color: #e1a111 !important;
+}

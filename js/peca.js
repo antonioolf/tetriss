@@ -18,6 +18,10 @@ function Peca(params) {
 		return this.matriz;
 	};
 
+	this.getGrupoPecas = function() {
+		return this.grupoPecas;
+	};
+
 	// Verifica se a linha pode cortar a peça em algum lugar
 	this.contemLinha = function(linha) {
 		return ((linha >= this.getY()) && (linha < (this.getY() + this.getAltura())));

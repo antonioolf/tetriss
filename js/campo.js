@@ -34,19 +34,18 @@ function Campo(params) {
 	};
 
 	// Ativa/Inativa pixel baseado no Id que é uma string com as coordenadas (ex: #25-19)	
-	this.setPixel = function(x, y, flag, cor) {
+	this.setPixel = function(x, y, flag, peca) {
 		if(flag == 1) {
+			
+			$('#' + x + '-' + y).removeClass (function (index, className) {
+			    return (className.match (/(^|\s)cor-\S+/g) || []).join(' ');
+			});
+
+			$('#' + x + '-' + y).addClass('cor-' + peca.getGrupoPecas());
+
 			$('#' + x + '-' + y).addClass('ativo');
-			$('#' + x + '-' + y).addClass('ativo');
-			if(cor != null) {
-				$('#' + x + '-' + y).css('background-color', cor);
-			}
 		} else {
 			$('#' + x + '-' + y).removeClass('ativo');
-			if(cor != null) {
-				$('#' + x + '-' + y).css('background-color', '#f9f9f9');
-			}
-
 		}
 	};
 
@@ -62,7 +61,7 @@ function Campo(params) {
 				// Evita que a peça atual apague os rastros das outras
 				if(peca.getMatrizAtual()[i][j] != 0) {
 					var valor = flag ? peca.getMatrizAtual()[i][j] : 0;
-					this.setPixel(peca.getX() + j, peca.getY() + i , valor, peca.getCor());
+					this.setPixel(peca.getX() + j, peca.getY() + i , valor, peca);
 				}
 			}
 		}
