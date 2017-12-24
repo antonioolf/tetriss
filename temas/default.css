@@ -12,13 +12,14 @@ body {
 }
 
 .bloco {
-	background-color: #f9f9f9;
+	color: white;
+	background-color: black;
 	width: 30px;
 	height: 30px;
 	display: inline-block;
-	margin-left: 1px;
+/*	margin-left: 1px;
 	margin-right: 1px;
-	margin-top: 1px;
+	margin-top: 1px;*/
 
     vertical-align: top;
     line-height: 25px;
@@ -29,19 +30,22 @@ body {
 	background-color: black;
 }
 
+/*http://www.color-hex.com/*/
+/*colour hunt*/
 
+.ativo.cor-0 {
+	background-color: #d9534f;
+}
 .ativo.cor-1 {
-	background-color: #29abe9 !important;
+	/*background-color: #f9f9f9;*/
+	background-color: gray;
 }
 .ativo.cor-2 {
-	background-color: #c42381 !important;
+	background-color: #5bc0de;
 }
 .ativo.cor-3 {
-	background-color: #e15458 !important;
+	background-color: #5cb85c;
 }
 .ativo.cor-4 {
-	background-color: #a41468 !important;
-}
-.ativo.cor-5 {
-	background-color: #e1a111 !important;
+	background-color: #428bca;
 }

@@ -172,7 +172,12 @@ function Game(params) {
 		}.bind(this));
 
 		naoAtingidas.forEach(function(peca) {
-			peca.desce(this.getCampo());
+			
+			// Desce apenas as peças que tiverem acima da linha que foi destruída
+			if (peca.getY() < linha) {
+				peca.desce(this.getCampo());	
+			}
+
 		}.bind(this));
 	};	
 }

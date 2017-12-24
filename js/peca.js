@@ -8,12 +8,6 @@ function Peca(params) {
 	this.x = 4;
 	this.y = -1;
 
-	this.cor = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-
-	this.getCor = function() {
-		return this.cor;
-	}
-
 	this.getMatrizAtual = function() {
 		return this.matriz;
 	};
@@ -31,12 +25,12 @@ function Peca(params) {
 		return linha - this.getY();
 	};
 
-	this.destroiIndice = function(linha, campo) {
+	this.destroiIndice = function(indice, campo) {
+
 		campo.printPeca(this, false);
 		var m = this.getMatrizAtual();
 		var matriz = JSON.parse(JSON.stringify(m));
-		matriz.splice(linha, 1);
-		
+		matriz.splice(indice, 1);
 		this.y++;
 
 		this.matriz = matriz;
