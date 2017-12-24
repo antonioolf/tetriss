@@ -9,13 +9,13 @@ function Campo(params) {
 		for (var i = 0; i < this.y; i++) {
 			var blocos = '';
 			for (var j = 0; j < this.x; j++) {
-				if(j == 0) {
-					blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+ i +'</div>';
-				} else {
-					blocos += '<div class="bloco" id="'+ j +'-'+ i +'"></div>';
-				}
+				// if(j == 0) {
+				// 	blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+ i +'</div>';
+				// } else {
+				// 	blocos += '<div class="bloco" id="'+ j +'-'+ i +'"></div>';
+				// }
 
-				// blocos += '<div class="bloco" id="'+ j +'-'+ i +'">'+  j +'-'+ i +'</div>';		
+				blocos += '<div class="bloco" id="'+ j +'-'+ i +'"></div>';
 			}
 			$('#matriz').append('<div class="linha">'+ blocos +'</div>');
 		}
