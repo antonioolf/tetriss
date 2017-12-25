@@ -7,3 +7,9 @@ Clone de Tetris em JavaScript. Jogue aqui!
 Correções e melhorias são muito bem-vindas! Sinta-se livre para fazer fork ou mandar PRs.
 
 ## Screenshots
+
+![picture](img/screenshots/screenshots.png)
+
+## Licença
+
+[...]
