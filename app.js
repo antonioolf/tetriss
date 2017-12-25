@@ -31,13 +31,15 @@ $(document).ready(function() {
 				
 				pecaAtual = new Peca({});
 				game.getCampo().gerar();
+			} else {
+
+				game.mataPeca(pecaAtual);
+				pecaAtual = new Peca({});
+
+				// Pontua (ou não) sempre que tiver linhas cheias no campo
+				game.pontuar();
+
 			}
-
-			game.mataPeca(pecaAtual);
-			pecaAtual = new Peca({});
-
-			// Pontua (ou não) sempre que tiver linhas cheias no campo
-			game.pontuar();
 		}
 
 		pecaAtual.desce(game.getCampo());
