@@ -1,14 +1,26 @@
 body {
 	text-align: center;
-	font-size: 6px;
 	font-family: arial;
+	background-color: white;
 }
+
+#container {
+	display: inline-block;
+	margin: 0 auto;
+	border: solid 3px black;
+}
+#info {
+	display: inline-block;
+	vertical-align: top;
+	color: gray;
+}
+
 #matriz {
 	width: auto;
 	height: auto;
 	display: inline-block;
-	border: solid 1px black;
 	margin: 0 auto;
+	border-right: solid 3px black;
 }
 
 .bloco {
@@ -37,8 +49,7 @@ body {
 	background-color: #d9534f;
 }
 .ativo.cor-1 {
-	/*background-color: #f9f9f9;*/
-	background-color: gray;
+	background-color: #f9f9f9;
 }
 .ativo.cor-2 {
 	background-color: #5bc0de;
@@ -48,4 +59,15 @@ body {
 }
 .ativo.cor-4 {
 	background-color: #428bca;
+}
+
+/* Info */
+
+#info .box {
+	padding: 10px 10px;
+}
+
+#info .box .titulo{
+	font-weight: bold;
+	margin-bottom: 5px;
 }

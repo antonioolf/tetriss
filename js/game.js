@@ -1,5 +1,6 @@
 function Game(params) {
 	this.campo = params.campo;
+	this.info = params.info;
 	this.velocidade = params.velocidade;
 	this.pecasMortas = [];
 	
@@ -146,7 +147,8 @@ function Game(params) {
 		while(linhaCheia = this.getCampo().getLinhaCheia()) {
 			if(!linhaCheia) {
 				return false;
-			} else {				
+			} else {
+				this.info.aumentaPontuacao();
 				this.destroiLinha(linhaCheia);
 				this.desceTodasAcima(linhaCheia);
 			}

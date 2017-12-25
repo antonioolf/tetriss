@@ -1,14 +1,18 @@
 var campo = new Campo({ x: 10, y: 18 });
+var info = new Info({});
 
 var game = new Game({
 	campo: campo,
-	velocidade: 300
+	info: info,
+	velocidade: 400
 });
 
 var pecaAtual = new Peca({});
 
 $(document).ready(function() {
 	game.getCampo().gerar();
+
+	$('#pontuacao').text(info.getPontuacao());
 	
 	// Loop principal
 	setInterval(function() {
