@@ -18,6 +18,21 @@ $(document).ready(function() {
 	setInterval(function() {
 		
 		if(game.colidiuY(pecaAtual) || game.getCampo().fimY(pecaAtual)) {
+			
+			// Game Over
+			if(pecaAtual.getY() <= 0) {
+
+				info = new Info({});
+				game = new Game({
+					campo: campo,
+					info: info,
+					velocidade: 400
+				});
+				
+				pecaAtual = new Peca({});
+				game.getCampo().gerar();
+			}
+
 			game.mataPeca(pecaAtual);
 			pecaAtual = new Peca({});
 

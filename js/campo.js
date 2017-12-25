@@ -6,6 +6,7 @@ function Campo(params) {
 	this.gerar = function() {
 		// i = y
 		// j = x
+		$('#matriz').html('');
 		for (var i = 0; i < this.y; i++) {
 			var blocos = '';
 			for (var j = 0; j < this.x; j++) {
