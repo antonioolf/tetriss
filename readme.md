@@ -10,6 +10,15 @@ Correções e melhorias são muito bem-vindas! Sinta-se livre para fazer fork ou
 
 ![picture](img/screenshots/screenshots.png)
 
+
+## TODO
+
+[ ] Ajustar UX para mobile
+[ ] Remover uso do jQuery (detecção de pressionamento de teclas e algumas manipulações de DOM)
+[ ] Detectar e corrigir bugs do gameplay
+[ ] Implementar Joystick
+[ ] Criar mais temas
+
 ## Licença
 
 [...]
