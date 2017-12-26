@@ -11,7 +11,7 @@ Correções e melhorias são muito bem-vindas! Sinta-se livre para fazer fork ou
 ![picture](img/screenshots/screenshots.png)
 
 
-## TODO
+## TODO list
 
 * Ajustar UX para mobile
 * Criar um joystick
