@@ -1,0 +1,25 @@
+{
+  "name": "tetriss",
+  "version": "1.0.0",
+  "description": "Clone do game Tetris feito em JavaScript",
+  "main": "index.html",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guitarrist/tetriss.git"
+  },
+  "keywords": [
+    "tetris",
+    "tetriss",
+    "retro",
+    "game"
+  ],
+  "author": "Antônio Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guitarrist/tetriss/issues"
+  },
+  "homepage": "https://github.com/guitarrist/tetriss#readme"
+}
