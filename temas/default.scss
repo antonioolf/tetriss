@@ -1,0 +1,122 @@
+$font: 'arial';
+$white: #f9f9f9;
+
+body {
+	text-align: center;
+	font-family: $font;
+	background-color: $white;
+}
+
+#container {
+	display: inline-block;
+	margin: 0 auto;
+	border: solid 3px black;
+}
+
+#info {
+	display: inline-block;
+	vertical-align: top;
+	color: gray;
+}
+
+#matriz {
+	width: auto;
+	height: auto;
+	display: inline-block;
+	margin: 0 auto;
+	border-right: solid 3px black;
+}
+
+.bloco {
+	color: white;
+	background-color: black;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	/*margin-left: 1px;*/
+	/*margin-right: 1px;*/
+	/*margin-top: 1px;*/
+
+    vertical-align: top;
+    line-height: 25px;
+    font-size: 15px;
+}
+
+.bloco.ativo {
+	background-color: black;
+}
+
+/*http://www.color-hex.com/*/
+/*colour hunt*/
+
+.ativo.cor-0 {
+	background-color: #d9534f;
+}
+.ativo.cor-1 {
+	background-color: #f9f9f9;
+}
+.ativo.cor-2 {
+	background-color: #5bc0de;
+}
+.ativo.cor-3 {
+	background-color: #5cb85c;
+}
+.ativo.cor-4 {
+	background-color: #428bca;
+}
+
+/* Info */
+
+#info .box {
+	padding: 10px 10px;
+}
+
+#info .box .titulo {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+
+/* ------- Joystick ---------------- */
+
+#joystick {
+	display: flex;
+	border-top: solid 3px black;
+}
+
+#direcional {
+	flex: 1;
+
+	a {
+		background-color: black;
+		width: 25px;
+		height: 25px;
+		display: block;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+
+	table {
+	    flex: 1;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    height: 100px;
+	}
+
+}
+
+#botoes {	
+	flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+	#action {
+		background-color: black;
+		width: 50px;
+		height: 50px;
+		display: block;
+		border-radius: 50%;
+	}
+}

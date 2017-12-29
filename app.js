@@ -4,7 +4,7 @@ var info = new Info({});
 var game = new Game({
 	campo: campo,
 	info: info,
-	velocidade: 4000000
+	velocidade: 400
 });
 
 var pecaAtual = new Peca({});
@@ -48,35 +48,48 @@ $(document).ready(function() {
 
 	// Verifica se alguma tecla foi pressionada
 	$("body").keydown(function(e) {
+		var action;
+		
+			 if(e.keyCode == 38) {	action = 'up';		} 
+		else if(e.keyCode == 40) {	action = 'down'; 	} 
+		else if(e.keyCode == 37) {	action = 'left';	} 
+		else if(e.keyCode == 39) {	action = 'right';	}
 
-	  	// up
-	  	if(e.keyCode == 38) {	
+		handleAction(action);
+	});
+
+	$('#up, #down, #left, #right, #action').on('click', function(e) {
+		e.preventDefault();
+		var action = $(this).attr('id');
+		handleAction(action);
+	});
+
+	function handleAction(action) {
+
+	  	if(action == 'up' || action == 'action') {	
 	  		pecaAtual.rotaciona();
 	  	}
 
-	  	// baixo
-	  	else if(e.keyCode == 40) {
+	  	else if(action == 'down') {
 	  		if(!game.colidiuY(pecaAtual) && !game.getCampo().fimY(pecaAtual)) {
 		  		pecaAtual.desce(game.getCampo());
 	  		}
   		}
-
-		// left
-	  	if(e.keyCode == 37 && !game.getCampo().fimEsquerda(pecaAtual)) {
+		
+	  	if(action == 'left' && !game.getCampo().fimEsquerda(pecaAtual)) {
 			if(!game.colidiuEsquerda(pecaAtual)) {
 				pecaAtual.praEsquerda(game.getCampo());
 			} else {
 				// Fazer barulho/feedback visual indicando que não é possível
 			}
-	  	}	  	
-
-	  	// right
-	  	else if(e.keyCode == 39 && !game.getCampo().fimDireita(pecaAtual)) {
+	  	}
+	  	
+	  	else if(action == 'right' && !game.getCampo().fimDireita(pecaAtual)) {
 			if(!game.colidiuDireita(pecaAtual)) {
 				pecaAtual.praDireita(game.getCampo());
 			} else {
 				// Fazer barulho/feedback visual indicando que não é possível
 			}
 	  	}
-	});
+	};
 });
