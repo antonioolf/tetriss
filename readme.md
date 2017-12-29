@@ -4,7 +4,7 @@ Clone do game Tetris feito em JavaScript. [Jogue aqui!](http://tetriss.com)
 
 ## Screenshots
 
-![picture](img/screenshots/screenshots.png)
+![picture](img/screenshots.png)
 
 ## Contribuições
 
@@ -18,7 +18,3 @@ Correções e melhorias são muito bem-vindas! Sinta-se livre para fazer fork ou
 - [ ] Detectar e corrigir bugs do gameplay
 - [ ] Implementar Joystick
 - [ ] Criar mais temas
-
-## Licença
-
-[...]
