@@ -67,7 +67,37 @@ body {
 	padding: 10px 10px;
 }
 
-#info .box .titulo{
+#info .box .titulo {
 	font-weight: bold;
 	margin-bottom: 5px;
+}
+
+
+/* ------- Joystick ---------------- */
+
+#joystick {
+	display: flex;
+}
+
+#direcional {
+	flex: 1;
+	background-color: green;
+}
+
+#direcional a {
+	background-color: gray;
+	width: 10px;
+	height: 10px;
+	display: block;
+	margin: 0 auto;
+}
+
+#direcional table {
+	flex: 1;
+	width: 100%;
+}
+
+#botoes {	
+	flex: 1;
+	background-color: orange;
 }
