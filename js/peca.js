@@ -101,5 +101,5 @@ function Peca(params) {
 
 	this.getY = function() {
 		return this.y;
-	}
+	};
 }

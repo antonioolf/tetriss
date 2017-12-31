@@ -8,8 +8,14 @@ var game = new Game({
 });
 
 var pecaAtual = new Peca({});
+var arrayProximas = [
+	new Peca({}),
+	new Peca({}),
+	new Peca({})
+];
 
 $(document).ready(function() {
+
 	game.getCampo().gerar();
 
 	$('#pontuacao').text(info.getPontuacao());
@@ -34,11 +40,12 @@ $(document).ready(function() {
 			} else {
 
 				game.mataPeca(pecaAtual);
-				pecaAtual = new Peca({});
+
+				pecaAtual = arrayProximas.pop();
+				arrayProximas.unshift(new Peca({}));
 
 				// Pontua (ou não) sempre que tiver linhas cheias no campo
 				game.pontuar();
-
 			}
 		}
 

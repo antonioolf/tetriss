@@ -1,5 +1,6 @@
 function Game(params) {
 	this.campo = params.campo;
+	this.campoPreview = params.campoPreview;
 	this.info = params.info;
 	this.velocidade = params.velocidade;
 	this.pecasMortas = [];
@@ -16,6 +17,10 @@ function Game(params) {
 
 	this.getCampo = function() {
 		return this.campo;
+	};
+
+	this.getCampoPreview = function() {
+		return this.campoPreview;
 	};
 
 	// ---------- Settings ----------  

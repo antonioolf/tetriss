@@ -3,10 +3,19 @@
 <head>
 	<title>Tetris Game</title>
  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" type="text/css" href="temas/default.css" />
-	<!-- <link rel="stylesheet" type="text/css" href="temas/material.css" /> -->
-	<!-- <link rel="stylesheet" type="text/css" href="temas/neon.css" /> -->
-	<!-- <link rel="stylesheet" type="text/css" href="temas/retro.css" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+	<link rel="icon" type="image/png" href="img/favicon.png">
+
+	<script type="text/javascript">
+	    window.smartlook||(function(d) {
+	    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+	    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+	    c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+	    })(document);
+	    smartlook('init', '7c22ec39020cf69077653a2eaec32bbfbb9202e9');
+	</script>
 </head>
 <body>
 
@@ -25,37 +34,7 @@
 			<div class="titulo">Pontuação</div>
 			<div id="pontuacao">-</div>
 		</div>
-		<!-- 		
-		<div class="box">
-			<div class="titulo">Level</div>
-			<div id="level">-</div>
-		</div> 
-		-->
 	</div>	
-	<div id="joystick">
-		<div id="direcional">	
-			<table>
-				<tr>
-					<td></td>
-					<td><a id="up" href="#"></a></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><a id="left" href="#"></a></td>
-					<td></td>
-					<td><a id="right" href="#"></a></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><a id="down" href="#"></a></td>
-					<td></td>
-				</tr>						
-			</table>
-		</div>
-		<div id="botoes">
-			<a id="action" href="#"></a>
-		</div>
-	</div>
 </div>
 
 <script type="text/javascript" src="js/jquery.js"></script>
