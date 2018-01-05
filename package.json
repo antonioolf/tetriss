@@ -1,25 +1,33 @@
 {
-  "name": "tetriss",
-  "version": "1.0.0",
-  "description": "Clone do game Tetris feito em JavaScript",
-  "main": "index.html",
-  "scripts": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/guitarrist/tetriss.git"
-  },
-  "keywords": [
-    "tetris",
-    "tetriss",
-    "retro",
-    "game"
-  ],
-  "author": "Antônio Oliveira",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/guitarrist/tetriss/issues"
-  },
-  "homepage": "http://tetriss.com"
+    "name": "tetriss",
+    "version": "1.0.0",
+    "description": "Clone do game Tetris feito em JavaScript",
+    "main": "index.html",
+    "scripts": {
+        "test": "test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/guitarrist/tetriss.git"
+    },
+    "keywords": [
+        "tetris",
+        "tetriss",
+        "retro",
+        "game"
+    ],
+    "author": "Antônio Oliveira",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/guitarrist/tetriss/issues"
+    },
+    "homepage": "http://tetriss.com",
+    "devDependencies": {
+        "gulp": "latest",
+        "gulp-util": "latest",
+        "gulp-sass": "latest",
+        "gulp-uglify": "latest",
+        "gulp-concat": "latest",
+        "gulp-connect": "latest"
+    }  
 }
