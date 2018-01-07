@@ -4,7 +4,7 @@ var info = new Info({});
 var game = new Game({
     campo: campo,
     info: info,
-    velocidade: 400
+    velocidade: 400000
 });
 
 var pecaAtual = new Peca({});
