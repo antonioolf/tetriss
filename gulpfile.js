@@ -24,7 +24,9 @@ var build = function () {
         'js/campo.js',
         'js/peca.js',
         'js/info.js',
-        'js/app.js'
+        'js/app.js',
+        'node_modules/particles.js/particles.js',
+        'js/extra.js'
     ])
     .pipe(uglify())
     .pipe(concat('index.js'))

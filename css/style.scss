@@ -1,35 +1,66 @@
-$font: 'arial';
-$white: #f9f9f9;
+$fonte: 'arial';
+$corFonte: #505050;
+$background: #6dbbff;
 
+$cor-0: #d9534f;
+$cor-1: #8a8a8a;
+$cor-2: #5bc0de;
+$cor-3: #5cb85c;
+$cor-4: #428bca;
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
 body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	text-align: center;
-	font-family: $font;
-	background-color: $white;
+	font-family: $fonte;
+	color: $corFonte;
+	
+	background: #2193b0;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to bottom, #6dd5ed, #2193b0);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to bottom, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 #container {
-	display: inline-block;
 	margin: 0 auto;
-	border: solid 3px black;
+	background-color: white;
+	border-radius: 6px;
+    padding: 13px;
+
+	-webkit-box-shadow: 0px 0px 22px 0px rgba(10, 10, 10, 0.5);
+	-moz-box-shadow:    0px 0px 22px 0px rgba(10, 10, 10, 0.5);
+	box-shadow:         0px 0px 22px 0px rgba(10, 10, 10, 0.5);
 }
 
 #info {
 	display: inline-block;
 	vertical-align: top;
-	color: gray;
 }
 
 #matriz {
 	width: auto;
-	height: auto;
-	display: inline-block;
-	margin: 0 auto;
-	border-right: solid 3px black;
+    height: auto;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+#pontuacaoBox, #matriz {
+  	border: solid 5px #2193b0;
+    border-radius: 3px;
+	-webkit-box-shadow: 0px 0px 8px 0px rgba(10, 10, 10, 0.3);
+	-moz-box-shadow:    0px 0px 8px 0px rgba(10, 10, 10, 0.3);
+	box-shadow:         0px 0px 8px 0px rgba(10, 10, 10, 0.3);
 }
 
 .bloco {
-	color: white;
-	background-color: black;
+	color: $corFonte;
+	background-color: white;
 	width: 30px;
 	height: 30px;
 	display: inline-block;
@@ -50,19 +81,19 @@ body {
 /*colour hunt*/
 
 .ativo.cor-0 {
-	background-color: #d9534f;
+	background-color: $cor-0;
 }
 .ativo.cor-1 {
-	background-color: #f9f9f9;
+	background-color: $cor-1;
 }
 .ativo.cor-2 {
-	background-color: #5bc0de;
+	background-color: $cor-2;
 }
 .ativo.cor-3 {
-	background-color: #5cb85c;
+	background-color: $cor-3;
 }
 .ativo.cor-4 {
-	background-color: #428bca;
+	background-color: $cor-4;
 }
 
 /* Info */
@@ -76,6 +107,13 @@ body {
 	margin-bottom: 5px;
 }
 
+#particles-js {
+	flex: 1;
+	position: absolute;
+	width: 100%;
+	height: 90%;
+	z-index: -1;
+}
 
 /* ------- Joystick ---------------- */
 
