@@ -1,6 +1,14 @@
 var campo = new Campo({ x: 10, y: 18 });
 var info = new Info({});
 
+var arrayProximas = [
+    new Peca({}),
+    new Peca({}),
+    new Peca({})
+];
+
+info.updateProximas(arrayProximas);
+
 var game = new Game({
     campo: campo,
     info: info,
@@ -8,11 +16,6 @@ var game = new Game({
 });
 
 var pecaAtual = new Peca({});
-var arrayProximas = [
-    new Peca({}),
-    new Peca({}),
-    new Peca({})
-];
 
 $(document).ready(function() {
 
@@ -43,6 +46,7 @@ $(document).ready(function() {
 
                 pecaAtual = arrayProximas.pop();
                 arrayProximas.unshift(new Peca({}));
+                info.updateProximas(arrayProximas);
 
                 // Pontua (ou não) sempre que tiver linhas cheias no campo
                 game.pontuar();
