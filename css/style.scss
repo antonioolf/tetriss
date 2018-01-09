@@ -7,6 +7,9 @@ $cor-1: #ffbf01;
 $cor-2: #5bc0de;
 $cor-3: #5cb85c;
 $cor-4: #428bca;
+$cor-5: #4fd75a;
+$cor-6: #bfff00;
+
 
 html, body {
 	height: 100%;
@@ -94,21 +97,13 @@ body {
 /*http://www.color-hex.com/*/
 /*colour hunt*/
 
-.ativo.cor-0 {
-	background-color: $cor-0;
-}
-.ativo.cor-1 {
-	background-color: $cor-1;
-}
-.ativo.cor-2 {
-	background-color: $cor-2;
-}
-.ativo.cor-3 {
-	background-color: $cor-3;
-}
-.ativo.cor-4 {
-	background-color: $cor-4;
-}
+.ativo.cor-0 {	background-color: $cor-0; }
+.ativo.cor-1 {	background-color: $cor-1; }
+.ativo.cor-2 { 	background-color: $cor-2; }
+.ativo.cor-3 {	background-color: $cor-3; }
+.ativo.cor-4 { 	background-color: $cor-4; }
+.ativo.cor-5 { 	background-color: $cor-5; }
+.ativo.cor-6 { 	background-color: $cor-6; }
 
 /* Info */
 
