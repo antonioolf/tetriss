@@ -8,7 +8,7 @@ Clone do game Tetris feito em JavaScript. [Jogue aqui!](http://tetriss.com)
 
 ## Contribuições
 
-Correções e melhorias são muito bem-vindas! Sinta-se livre para fazer fork ou mandar PRs.
+Correções e melhorias são muito bem-vindas! Sinta-se livre para contribuir com issues, forks ou PRs.
 
 ## TODO list
 
