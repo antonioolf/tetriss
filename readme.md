@@ -1,6 +1,6 @@
 # Tetris [s]
 
-Clone do game Tetris feito em JavaScript. [Jogue aqui!](https://guitarrist.github.io/tetriss/)
+Clone do game Tetris feito em JavaScript. [Jogue aqui!](https://antonioolf.github.io/tetriss/)
 
 ## Screenshots
 
