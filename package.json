@@ -4,7 +4,8 @@
   "description": "Clone do game Tetris feito em JavaScript",
   "main": "index.html",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "scss": "node-sass --watch css -o css --output-style compressed"
   },
   "repository": {
     "type": "git",
@@ -30,5 +31,8 @@
     "gulp-uglify": "latest",
     "gulp-util": "latest",
     "gulp-watch": "^5.0.0"
+  },
+  "dependencies": {
+    "node-sass": "^4.14.1"
   }
 }
